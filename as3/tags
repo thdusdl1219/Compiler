@@ -1,0 +1,16 @@
+DocCons	pp.sml	/^    fun (x ^^ y)    = DocCons(x,y)$/
+FunLexFun	runlex.sml	/^struct $/
+Proj	absyn.sml	/^     | Proj of int * exp       (* get ith field fr/
+before	fun.lex.sml	/^	fun nextId() = !next before (next := !next + 1)$/
+error	errormsg.sml	/^				(* error(n,s) reports the error "s" at locatio/
+foldl	eval.sml	/^   List.foldl (fn ((name,body),env) => $/
+get_loc	heap.sml	/^     fun get_loc (_,m) loc = Mem.lookup m loc$/
+if	all.fun	/^    if ((c < 10 || not (c < 10)) & x=c ) then x$/
+inputN	fun.lex.sml	/^			      then TSIO.inputN (strm, newPos - oldPos)$/
+insert	table.sml	/^  fun enter(t,k,a) = IntBinaryMap.insert(t,getInt /
+make_pos	fun.lex	/^<INITIAL>\\#{proj}=> (let val (yypos, yypos2) = ma/
+not	test.fun	/^      not (a < b & not a = b)$/
+parse	compile.sml	/^  fun string2absyn s = Parse.parse ("", TextIO.ope/
+project	eval.sig	/^       3) a program tries to project (Proj) from s/
+text	funpp.sml	/^   fun pp_id id = text (Symbol.name id)$/
+type	fun.grm.sig	/^type ('a,'b) token$/

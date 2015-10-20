@@ -1,0 +1,239 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+'a	symbol.sml	/^  type 'a table$/;"	t
+'a	symbol.sml	/^  type 'a table= 'a Table.table$/;"	t
+'a	table.sig	/^   type 'a table$/;"	t
+'a	table.sml	/^  type 'a table = 'a IntBinaryMap.map$/;"	t
+/	.cm/x86-unix/mips.sml	/^/;"	
+CODEGEN	codegen.sml	/^signature CODEGEN = sig$/;"	s
+Codegen	codegen.sml	/^structure Codegen :> CODEGEN = $/;"	r
+E	codegen.sml	/^    structure E = ErrorMsg$/;"	r
+E	fibx.sml	/^    structure E = ErrorMsg$/;"	r
+ERRORMSG	errormsg.sml	/^signature ERRORMSG =$/;"	s
+Error	errormsg.sml	/^    exception Error$/;"	e
+Error	errormsg.sml	/^  exception Error$/;"	e
+ErrorMsg	errormsg.sml	/^structure ErrorMsg : ERRORMSG =$/;"	r
+Fibx	fibx.sml	/^structure Fibx =$/;"	r
+H	symbol.sml	/^  structure H = HashTable$/;"	r
+IMMTooLarge	mips.sml	/^  exception IMMTooLarge$/;"	e
+IntMapTable	table.sml	/^functor IntMapTable (type key$/;"	c
+Key	mips.sig	/^  structure RegSet : ORD_SET where type Key.ord_key = reg $/;"	t
+M	codegen.sml	/^    structure M = Mips$/;"	r
+M	fibx.sml	/^    structure M = Mips$/;"	r
+MIPS	mips.sig	/^signature MIPS = sig$/;"	s
+Mips	mips.sml	/^structure Mips :> MIPS  =$/;"	r
+NL	fib.s	/^NL:	.asciiz	"\\n"$/;"	l
+NL	fibx.s	/^NL:	.asciiz	"\\n"$/;"	l
+RegSet	mips.sig	/^  structure RegSet : ORD_SET where type Key.ord_key = reg $/;"	r
+RegSet	mips.sml	/^  structure RegSet =  RedBlackSetFn(type ord_key = reg $/;"	r
+RegTb	mips.sig	/^  structure RegTb : TABLE where type key = reg$/;"	r
+RegTb=	mips.sml	/^  structure RegTb= IntMapTable(type key = reg $/;"	r
+SYMBOL	symbol.sml	/^signature SYMBOL =$/;"	s
+Symbol	symbol.sml	/^  exception Symbol$/;"	e
+Symbol	symbol.sml	/^structure Symbol :> SYMBOL =$/;"	r
+TABLE	table.sig	/^signature TABLE = $/;"	s
+Table	symbol.sml	/^  structure Table = IntMapTable(type key = symbol$/;"	r
+_fibiter	fib.s	/^_fibiter:$/;"	l
+_fibrec	fib.s	/^_fibrec:$/;"	l
+_printint	fib.s	/^_printint:$/;"	l
+_printint	fibx.s	/^_printint:$/;"	l
+address	mips.sig	/^  type address = immed * reg $/;"	t
+address	mips.sml	/^  type address = immed * reg$/;"	t
+allocation	mips.sig	/^  type allocation = reg RegTb.table$/;"	t
+allocation	mips.sml	/^ type allocation = reg RegTb.table$/;"	t
+anyErrors	errormsg.sml	/^    val anyErrors : bool ref$/;"	v
+anyErrors	errormsg.sml	/^  val anyErrors = ref false$/;"	v
+aop2	mips.sig	/^  and aop2 = Abs | Neg | Not$/;"	t
+aop2	mips.sml	/^  and aop2 = Abs | Neg | Not$/;"	t
+aop3	mips.sig	/^  and aop3 = Add | And | Mulo | Div | Or | Rem | Sub | Xor| Seq | Slt$/;"	t
+aop3	mips.sml	/^  and aop3 = Add | And | Mulo | Div | Or | Rem | Sub | Xor| Seq | Slt$/;"	t
+aopi	mips.sig	/^  and aopi = Addi | Andi | Ori | Xori$/;"	t
+aopi	mips.sml	/^  and aopi = Addi | Andi | Ori | Xori$/;"	t
+blist	codegen.sml	/^    val blist = ref (nil:M.codeblock list)$/;"	v
+blist	fibx.sml	/^    val blist = ref (nil:M.codeblock list)$/;"	v
+calleeSaved	mips.sig	/^  val calleeSaved : reg list (* the list of callee saved regs*)$/;"	v
+calleeSaved	mips.sml	/^  val calleeSaved = map reg [ "$s0","$s1","$s2","$s3","$s4","$s5","$s6","$s7"]$/;"	v
+callerSaved	mips.sig	/^  val callerSaved : reg list (* the list of caller saved regs*)$/;"	v
+callerSaved	mips.sml	/^  val callerSaved = map reg ["$a0","$a1","$a2","$a3", "$t0", "$t1",$/;"	v
+code2string	mips.sml	/^     fun code2string cL = $/;"	f
+codeblock	mips.sig	/^  type codeblock  = lab * instruction list $/;"	t
+codeblock	mips.sml	/^  type codeblock  = lab * instruction list $/;"	t
+codegen	codegen.sml	/^  val codegen : Absyn.prog -> Mips.program$/;"	v
+compare	mips.sml	/^			       val compare = comparereg) $/;"	v
+compare	symbol.sml	/^  fun compare ((_,i),(_,j)) = Int.compare (i,j)$/;"	f
+compare	symbol.sml	/^  val compare : ord_key * ord_key -> order  (* for ORD_KEY *)$/;"	v
+compareaddress	mips.sig	/^  val compareaddress : (address * address) -> order$/;"	v
+compareaddress	mips.sml	/^  fun compareaddress _ = raise (Fail "fixme")$/;"	f
+comparecode1	mips.sig	/^  and comparecode1 = Lt | Eq | Ne | Ge | Gt | Le $/;"	t
+comparecode1	mips.sml	/^  and comparecode1 = Lt | Eq | Ne | Ge | Gt | Le $/;"	t
+comparecode2	mips.sig	/^  and comparecode2 = Ltu | Geu | Gtu | Leu$/;"	t
+comparecode2	mips.sml	/^  and comparecode2 = Ltu | Geu | Gtu | Leu$/;"	t
+compareimmed	mips.sig	/^  val compareimmed : (immed * immed) -> order (*compare two immediates*)$/;"	v
+compareimmed	mips.sml	/^  fun compareimmed (im1, im2) = Int.compare (im1,im2)$/;"	f
+comparereg	mips.sig	/^  val comparereg : (reg * reg) -> order (* compare two registers*)$/;"	v
+comparereg	mips.sml	/^  val comparereg = Int.compare$/;"	v
+data2string	mips.sml	/^  fun data2string sL = $/;"	f
+def_use	mips.sig	/^  type def_use = {def: RegSet.set, use: RegSet.set}$/;"	t
+def_use	mips.sml	/^  type def_use = {def: RegSet.set, use: RegSet.set}$/;"	t
+done	fib.s	/^done:$/;"	l
+emit	codegen.sml	/^    fun emit i = ilist := i::(!ilist)$/;"	f
+emit	fibx.sml	/^    fun emit i = ilist := i::(!ilist)$/;"	f
+emit_all	codegen.sml	/^    fun emit_all() =$/;"	f
+emit_all	fibx.sml	/^    fun emit_all() =$/;"	f
+emit_fibiter_func	codegen.sml	/^    fun emit_fibiter_func() = ()$/;"	f
+emit_fibiter_func	fibx.sml	/^    fun emit_fibiter_func() = ()$/;"	f
+emit_fibrec_func	codegen.sml	/^    fun emit_fibrec_func() = ()$/;"	f
+emit_fibrec_func	fibx.sml	/^    fun emit_fibrec_func() = ()$/;"	f
+emit_label	codegen.sml	/^    fun emit_label l = (finish_block(); last_lab := SOME l)$/;"	f
+emit_label	fibx.sml	/^    fun emit_label l = (finish_block(); last_lab := SOME l)$/;"	f
+emit_main_func	codegen.sml	/^    fun emit_main_func () = $/;"	f
+emit_main_func	fibx.sml	/^    fun emit_main_func () = $/;"	f
+emit_printint_func	codegen.sml	/^    fun emit_printint_func() =$/;"	f
+emit_printint_func	fibx.sml	/^    fun emit_printint_func() =$/;"	f
+empty	symbol.sml	/^  val empty : 'a table$/;"	v
+empty	symbol.sml	/^  val empty = Table.empty$/;"	v
+empty	table.sig	/^   val empty : 'a table$/;"	v
+empty	table.sml	/^  val empty = IntBinaryMap.empty$/;"	v
+enter	symbol.sml	/^  val enter : 'a table * symbol * 'a -> 'a table$/;"	v
+enter	symbol.sml	/^  val enter = Table.enter$/;"	v
+enter	table.sig	/^   val enter : 'a table * key * 'a -> 'a table$/;"	v
+enter	table.sml	/^  fun enter(t,k,a) = IntBinaryMap.insert(t,getInt k,a)$/;"	f
+error	errormsg.sml	/^    val error : pos2 * string -> unit$/;"	v
+error	errormsg.sml	/^  fun error ((first,last), msg:string) =$/;"	f
+f	mips.sml	/^   let fun f (i, s::rest) = if name=s then i else f (i+1, rest)$/;"	f
+f	mips.sml	/^   let fun f [] = [] | f [r] = [reg2name r] | f(r::rs) = reg2name r :: "," :: f rs$/;"	f
+f	mips.sml	/^ let fun f r = if isvirtual r$/;"	f
+fileName	errormsg.sml	/^  val fileName = ref ""$/;"	v
+finish_block	codegen.sml	/^    fun finish_block () = $/;"	f
+finish_block	fibx.sml	/^    fun finish_block () = $/;"	f
+finish_fun	codegen.sml	/^    fun finish_fun () = (finish_block();$/;"	f
+finish_fun	fibx.sml	/^    fun finish_fun () = (finish_block();$/;"	f
+finish_prog	codegen.sml	/^    fun finish_prog() = $/;"	f
+finish_prog	fibx.sml	/^    fun finish_prog() = $/;"	f
+flist	codegen.sml	/^    val flist = ref (nil:M.funcode list)$/;"	v
+flist	fibx.sml	/^    val flist = ref (nil:M.funcode list)$/;"	v
+freshlab	mips.sig	/^  val freshlab : unit -> lab (*generate a new label*)$/;"	v
+freshlab	mips.sml	/^  fun freshlab () = (incr labCount ; Symbol.symbol ("L"^(Int.toString (!labCount))))$/;"	f
+funcode	mips.sig	/^  type funcode = codeblock list $/;"	t
+funcode	mips.sml	/^  type funcode = codeblock list   $/;"	t
+getInt	mips.sml	/^			     val getInt  = reg2int)$/;"	v
+getInt	symbol.sml	/^				fun getInt(s,n) = n)$/;"	f
+getInt	table.sml	/^		     val getInt: key -> int) : TABLE =$/;"	v
+go	codegen.sml	/^    fun go() =$/;"	f
+go	fibx.sml	/^    fun go() =$/;"	f
+hashtable	symbol.sml	/^  val hashtable : (string,int) H.hash_table = $/;"	v
+i	symbol.sml	/^        | NONE => let val i = !nextsym$/;"	v
+ilist	codegen.sml	/^    val ilist = ref (nil:M.instruction list)$/;"	v
+ilist	fibx.sml	/^    val ilist = ref (nil:M.instruction list)$/;"	v
+immed	mips.sig	/^  type immed $/;"	t
+immed	mips.sig	/^  val immed : int -> immed (*convert an int to an immediate*)$/;"	v
+immed	mips.sml	/^  fun immed x = if x> 65535 then raise IMMTooLarge else x$/;"	f
+immed	mips.sml	/^  type immed  = int$/;"	t
+immed2int	mips.sig	/^  val immed2int : immed -> int (* convert an immediate to an int*)$/;"	v
+immed2int	mips.sml	/^  fun immed2int im = im$/;"	f
+impossible	errormsg.sml	/^    val impossible : string -> 'a   (* raises Error *)$/;"	v
+impossible	errormsg.sml	/^  fun impossible msg =$/;"	f
+incr	mips.sml	/^  fun incr x = (x:= !x +1)$/;"	f
+info	mips.sml	/^   local val info =  [NONE,$/;"	v
+init_lists	codegen.sml	/^    fun init_lists () = (ilist := nil; blist := nil; flist := nil; $/;"	f
+init_lists	fibx.sml	/^    fun init_lists () = (ilist := nil; blist := nil; flist := nil; $/;"	f
+instr2string	mips.sml	/^  fun instr2string instr = $/;"	f
+instr_def_use	mips.sig	/^  val instr_def_use: instruction -> def_use$/;"	v
+instr_def_use	mips.sml	/^  val instr_def_use : instruction -> def_use =$/;"	v
+instruction	mips.sig	/^  datatype instruction = $/;"	t
+instruction	mips.sml	/^  datatype instruction = $/;"	t
+int2string	mips.sml	/^     let fun int2string x = if x < 0 then "-"^(Int.toString(~x))$/;"	f
+isvirtual	mips.sig	/^  val isvirtual : reg -> bool (*return true if the argument is a virtual reg*)$/;"	v
+isvirtual	mips.sml	/^  fun isvirtual r =  (r > 31)$/;"	f
+key	mips.sig	/^  structure RegTb : TABLE where type key = reg$/;"	t
+key	mips.sml	/^  structure RegTb= IntMapTable(type key = reg $/;"	t
+key	symbol.sml	/^  structure Table = IntMapTable(type key = symbol$/;"	t
+key	symbol.sml	/^  type key = symbol (* allows Symbol to match the TABLE signature as well *)$/;"	t
+key	symbol.sml	/^  type key = symbol$/;"	t
+key	table.sig	/^   type key$/;"	t
+key	table.sml	/^functor IntMapTable (type key$/;"	t
+key=key	table.sml	/^  type key=key$/;"	t
+lab	mips.sig	/^  type lab = Symbol.symbol$/;"	t
+lab	mips.sml	/^  type lab = Symbol.symbol$/;"	t
+lab2string	mips.sig	/^  val lab2string : lab -> string (* convert a label its name *)$/;"	v
+lab2string	mips.sml	/^  val lab2string = Symbol.name$/;"	v
+labCount	mips.sml	/^  val labCount = ref 0$/;"	v
+last_lab	codegen.sml	/^    val last_lab = ref (NONE: M.lab option)$/;"	v
+last_lab	fibx.sml	/^    val last_lab = ref (NONE: M.lab option)$/;"	v
+lineNum	errormsg.sml	/^  val lineNum = ref 1$/;"	v
+linePos	errormsg.sml	/^  val linePos = ref [1]$/;"	v
+list2set	mips.sig	/^  val list2set : reg list -> RegSet.set$/;"	v
+list2set	mips.sml	/^  fun list2set l = RegSet.addList(RegSet.empty,l)$/;"	f
+look	errormsg.sml	/^      let fun look(count, a::rest, n) =$/;"	f
+look	symbol.sml	/^  val look  : 'a table * symbol -> 'a option$/;"	v
+look	symbol.sml	/^  val look = Table.look$/;"	v
+look	table.sig	/^   val look  : 'a table * key -> 'a option$/;"	v
+look	table.sml	/^  fun look(t,k) = IntBinaryMap.find(t,getInt k)$/;"	f
+loop	fib.s	/^loop:$/;"	l
+main	fib.s	/^main:$/;"	l
+main	fibx.s	/^main:$/;"	l
+name	symbol.sml	/^  fun name(s,n) = s$/;"	f
+name	symbol.sml	/^  val name : symbol -> string$/;"	v
+newLine	errormsg.sml	/^    val newLine : int -> unit   (* Inform the ErrorMsg module that there is a newline$/;"	v
+newLine	errormsg.sml	/^  fun newLine p =  (lineNum := !lineNum+1; linePos := p :: !linePos)$/;"	f
+newReg	mips.sig	/^  val newReg : unit -> reg (* generate a new virtual register *)$/;"	v
+newReg	mips.sml	/^  fun newReg () = !regCount before incr regCount$/;"	f
+newline_lab	codegen.sml	/^    val newline_lab = M.thislab "NL"$/;"	v
+newline_lab	fibx.sml	/^    val newline_lab = M.thislab "NL"$/;"	v
+nextsym	symbol.sml	/^  val nextsym = ref 0$/;"	v
+opname	mips.sml	/^	 let val (opname, oper) = $/;"	v
+ord_key	mips.sml	/^  structure RegSet =  RedBlackSetFn(type ord_key = reg $/;"	t
+ord_key	symbol.sml	/^  type ord_key = symbol (* allows Symbol to match ORD_KEY signature *)$/;"	t
+ord_key	symbol.sml	/^  type ord_key = symbol$/;"	t
+out	codegen.sml	/^         val out = TextIO.openOut "fibx.s"$/;"	v
+out	fibx.sml	/^         val out = TextIO.openOut "fibx.s"$/;"	v
+pos	errormsg.sml	/^    type pos = int              (* A "pos" indicates the beginning or the end of $/;"	t
+pos	errormsg.sml	/^  type pos = int$/;"	t
+pos2	errormsg.sml	/^    type pos2 = pos*pos         (* the beginning and the end of a region *)$/;"	t
+pos2	errormsg.sml	/^  type pos2 = pos*pos$/;"	t
+printAssem	mips.sig	/^  val printAssem: (TextIO.outstream * program) -> unit$/;"	v
+printAssem	mips.sml	/^     fun printAssem ( os, (strblockL, funL))  =$/;"	f
+prog	codegen.sml	/^     let val prog = emit_all()$/;"	v
+prog	fibx.sml	/^     let val prog = emit_all()$/;"	v
+program	mips.sig	/^  type program = stringblock list *funcode list$/;"	t
+program	mips.sml	/^  type program = stringblock list * funcode list$/;"	t
+ra_tmp_reg	codegen.sml	/^     let val ra_tmp_reg = M.newReg()$/;"	v
+ra_tmp_reg	fibx.sml	/^     let val ra_tmp_reg = M.newReg()$/;"	v
+reg	mips.sig	/^  val reg : string -> reg (* convert a string such as "$sp" to a register*)$/;"	v
+reg	mips.sml	/^  fun reg (name : string) : reg  = $/;"	f
+reg	mips.sml	/^  type reg = int$/;"	t
+reg2int	mips.sig	/^  val reg2int : reg -> int (* convert a register to its number*)$/;"	v
+reg2int	mips.sml	/^  fun reg2int r = r$/;"	f
+reg2name	mips.sig	/^  val reg2name : reg -> string (* convert a register to its name*)$/;"	v
+reg2name	mips.sml	/^  fun reg2name r = if isvirtual r then "$x" ^ Int.toString(r-32)$/;"	f
+regCount	mips.sml	/^  val regCount = ref 32$/;"	v
+registers	mips.sig	/^  val registers : reg list (* the list of all Mips registers*)$/;"	v
+registers	mips.sml	/^  val registers = List.map  reg  regnames$/;"	v
+regnames	mips.sml	/^  val regnames = [ "$zero", "$at", "$v0", "$v1","$a0","$a1" ,"$a2", "$a3",$/;"	v
+regs2names	mips.sml	/^  fun regs2names rs =$/;"	f
+rename_regs	mips.sig	/^  val rename_regs : allocation -> instruction -> instruction$/;"	v
+rename_regs	mips.sml	/^ fun rename_regs (table: allocation) =$/;"	f
+reset	errormsg.sml	/^    val reset : string -> unit  (* Start at the beginning of the file whose name$/;"	v
+reset	errormsg.sml	/^  fun reset filename = (anyErrors:=false;$/;"	f
+reset	mips.sig	/^  val reset: unit -> unit (* *)$/;"	v
+reset	mips.sml	/^  fun reset () = (regCount := 32; labCount := 0)$/;"	f
+s	mips.sml	/^	 let val s = "\\t.data \\n"^(data2string strblockL)^"\\t.text \\n"^ (code2string (List.concat funL) )$/;"	v
+sizeHint	symbol.sml	/^  val sizeHint = 128$/;"	v
+sourceStream	errormsg.sml	/^  val sourceStream = ref TextIO.stdIn$/;"	v
+stringblock	mips.sig	/^  type stringblock = lab * string $/;"	t
+stringblock	mips.sml	/^  type stringblock = lab * string $/;"	t
+symbol	symbol.sml	/^  fun symbol name =$/;"	f
+symbol	symbol.sml	/^  type symbol = string * int$/;"	t
+symbol	symbol.sml	/^  val symbol : string -> symbol$/;"	v
+syscall_def_use	mips.sig	/^  val syscall_def_use: int -> def_use option  (* SPIM syscalls *)$/;"	v
+syscall_def_use	mips.sml	/^  fun syscall_def_use (num: int) : def_use option =$/;"	f
+thislab	mips.sig	/^  val thislab : string -> lab (*generate a label whose name $/;"	v
+thislab	mips.sml	/^  val thislab = Symbol.symbol$/;"	v
+wordSize	mips.sig	/^  val wordSize : int $/;"	v
+wordSize	mips.sml	/^  val wordSize = 4$/;"	v
+wordSizeImmed	mips.sig	/^  val wordSizeImmed : immed$/;"	v
+wordSizeImmed	mips.sml	/^  val wordSizeImmed = immed(4)$/;"	v
