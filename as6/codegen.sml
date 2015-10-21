@@ -134,7 +134,7 @@ structure Codegen :> CODEGEN =
       | strip(A.Let(i,e1,e2)) = A.Let(i,strip e1, strip e2)
       | strip(e)                = e
   
-  val data_size = 2
+  val data_size = 4
 
   fun make_expl env expl rega addr = 
     case expl of 
@@ -198,8 +198,12 @@ structure Codegen :> CODEGEN =
           let val r1 = gen_exp env exp1; val done_lab = M.freshlab (); val r = M.newReg() 
             in emit(M.Branchz(M.Eq, r1, done_lab)); emit(M.Move(r, gen_exp env exp2)); emit_label(done_lab); r end (* I don't know what is return... *)
         | gen (A.Call(exp1, exp2)) = 
-          let val r2 = gen_exp env exp2 in
-            emit(M.Move(M.reg "$a0", r2));    
+          let val r2 = gen_exp env exp2; val r = M.newReg() in
+            emit(M.Move(M.reg "$a0", r2)); emit(M.Jalr(M.reg "$ra", gen_exp env
+            exp1, M.callerSaved, M.calleeSaved)); emit(M.Move(r, M.reg "$v0")); r end (* jalr 잘 모르겠당. *) 
+        | gen (A.Let(id1, exp1, exp2)) = 
+          let val env = Symbol.enter(env, id1, Reg(gen_exp env exp1)) in gen_exp env
+          exp2 end
         | gen _ = E.impossible "unimplemented translation"
 
      in gen
@@ -216,7 +220,7 @@ structure Codegen :> CODEGEN =
            let val ra_tmp = M.newReg(); val s0_tmp = M.newReg(); val s1_tmp = M.newReg(); val s2_tmp = M.newReg(); val s3_tmp = M.newReg(); val s4_tmp = M.newReg(); val s5_tmp = M.newReg(); val s6_tmp = M.newReg(); val s7_tmp = M.newReg(); val a0_tmp = M.newReg(); val fenv = Symbol.enter(fenv, x, Reg(a0_tmp))
             in 
            emit_label (fun_label f);
-           emit (M.Move(ra_tmp, M.reg "$ra"));
+(*           emit (M.Move(ra_tmp, M.reg "$ra"));
            emit (M.Move(s0_tmp, M.reg "$s0"));
            emit (M.Move(s1_tmp, M.reg "$s1"));
            emit (M.Move(s2_tmp, M.reg "$s2"));
@@ -225,9 +229,9 @@ structure Codegen :> CODEGEN =
            emit (M.Move(s5_tmp, M.reg "$s5"));
            emit (M.Move(s6_tmp, M.reg "$s6"));
            emit (M.Move(s7_tmp, M.reg "$s7"));
-           emit (M.Move(a0_tmp, M.reg "$a0"));
+           emit (M.Move(a0_tmp, M.reg "$a0")); *)
            emit (M.Move(M.reg "$v0", gen_exp fenv (strip exp)));
-           emit (M.Move(M.reg "$ra", ra_tmp));
+(*           emit (M.Move(M.reg "$ra", ra_tmp));
            emit (M.Move(M.reg "$s0", s0_tmp));
            emit (M.Move(M.reg "$s1", s1_tmp));
            emit (M.Move(M.reg "$s2", s2_tmp));
@@ -235,7 +239,7 @@ structure Codegen :> CODEGEN =
            emit (M.Move(M.reg "$s4", s4_tmp));
            emit (M.Move(M.reg "$s5", s5_tmp));
            emit (M.Move(M.reg "$s6", s6_tmp));
-           emit (M.Move(M.reg "$s7", s7_tmp));
+           emit (M.Move(M.reg "$s7", s7_tmp)); *)
            emit_label (Symbol.symbol(Symbol.name (fun_label f) ^ ".epilog"));
            emit (M.Jr(M.reg("$ra"),M.reg "$v0" :: M.calleeSaved));
            finish_fun ()
