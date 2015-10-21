@@ -159,6 +159,7 @@ structure Codegen :> CODEGEN =
                | NONE => E.impossible ("Can't find " ^ Symbol.name id))
 
            (* IMPLEMENT ME! *)
+           (* int 32bit consider... *)
         | gen (A.Int i) =
           let val r = M.newReg()
             in emit (M.Li(r, M.immed i));
@@ -173,7 +174,7 @@ structure Codegen :> CODEGEN =
                         end
               | A.Get => let val r1 = gen_exp env (hd expl); val r = M.newReg()
                         in emit (M.Lw(r, (M.immed 0, r1))); r end
-              | A.Set => let val r1 = gen_exp env (hd expl); val r2 = gen_exp env (List.nth(expl, 1)) in emit (M.Sw(r2, (M.immed 0, r1))); r1 end 
+              | A.Set => let val r1 = gen_exp env (hd expl); val r2 = gen_exp env (List.nth(expl, 1)) in emit (M.Sw(r2, (M.immed 0, r1))); r1 end (* I don't know what is return.. *)
               | _ => 
                   let val mop = fun2mips_arith_op(oper); val r = M.newReg(); val r1 = gen_exp env (List.nth(expl, 0)); val r2 = gen_exp env (List.nth(expl, 1)); 
                     in emit(M.Arith3(mop,r,r1,r2));
@@ -193,7 +194,12 @@ structure Codegen :> CODEGEN =
           let val r1 = gen_exp env exp1; val else_lab = M.freshlab (); val r = M.newReg(); val done_lab = M.freshlab ()
             in emit(M.Branchz(M.Eq, r1, else_lab)); emit(M.Move(r, gen_exp env exp2)) ; emit(M.J(done_lab));
             emit_label (else_lab) ; emit(M.Move(r, gen_exp env exp3)) ; emit_label (done_lab); r end
-                                
+        | gen (A.While(exp1, exp2)) = 
+          let val r1 = gen_exp env exp1; val done_lab = M.freshlab (); val r = M.newReg() 
+            in emit(M.Branchz(M.Eq, r1, done_lab)); emit(M.Move(r, gen_exp env exp2)); emit_label(done_lab); r end (* I don't know what is return... *)
+        | gen (A.Call(exp1, exp2)) = 
+          let val r2 = gen_exp env exp2 in
+            emit(M.Move(M.reg "$a0", r2));    
         | gen _ = E.impossible "unimplemented translation"
 
      in gen
