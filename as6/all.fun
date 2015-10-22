@@ -14,20 +14,24 @@ fun dec_ref(x:int ref):<> =
   let a = !x in
     (x := a - 1; <>)
 
+/* mul let call */
 fun fact(x:int ref):int = 
   if (!x) < 1 then 1
     else let a = !x in
          let b = dec_ref(x) in
            a * fact(x) 
 
+/* proj */
 fun add_pair(x:<int,int>):(int) = 
    let a = #0 x in
    let b = #1 x in
      a+b
 
+/* function return */
 fun add_pair_silly(x:<>):<int,int>->int = 
    add_pair
 
+/* while, set */
 fun loop(x:int):int = 
    let a = ref (x:int) in
      ((while not((!a) < 701) do a:=(!a)-1); !a)

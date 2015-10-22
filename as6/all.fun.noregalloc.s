@@ -102,15 +102,15 @@ _fact:
 	j 	L12		# goto L12
 L11:
 	lw 	$x69, 0($x63)	# $x69 := [$x63+0]
+	la 	$x70, _dec_ref	# $x70 := _dec_ref
 	move 	$a0, $x63	# $a0 := $x63
-	la 	$x71, _dec_ref	# $x71 := _dec_ref
-	jalr 	$ra, $x71	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
-	move 	$x70, $v0	# $x70 := $v0
+	jalr 	$ra, $x70	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
+	move 	$x71, $v0	# $x71 := $v0
+	la 	$x73, _fact	# $x73 := _fact
 	move 	$a0, $x63	# $a0 := $x63
-	la 	$x74, _fact	# $x74 := _fact
-	jalr 	$ra, $x74	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
-	move 	$x73, $v0	# $x73 := $v0
-	mulo	$x72, $x69, $x73	# $x72 := $x69*$x73
+	jalr 	$ra, $x73	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
+	move 	$x74, $v0	# $x74 := $v0
+	mulo	$x72, $x69, $x74	# $x72 := $x69*$x74
 	move 	$x67, $x72	# $x67 := $x72
 L12:
 	move 	$v0, $x67	# $v0 := $x67
@@ -138,53 +138,55 @@ _loop:
 	slt	$x111, $x112, $x113	# $x111 := $x112<$x113
 	li 	$x114, 0		# $x114 := 0
 	seq	$x110, $x111, $x114	# $x110 := $x111==$x114
-	beqz	$x110, L13   	# if (signed) $x110 == 0 goto L13
+L13:
+	beqz	$x110, L14   	# if (signed) $x110 == 0 goto L14
 	lw 	$x117, 0($x109)	# $x117 := [$x109+0]
 	li 	$x118, 1		# $x118 := 1
 	sub	$x116, $x117, $x118	# $x116 := $x117-$x118
 	sw 	$x116, 0($x109)	# [$x109+0] := $x116
 	move 	$x115, $x109	# $x115 := $x109
-L13:
+	j 	L13		# goto L13
+L14:
 	lw 	$x119, 0($x109)	# $x119 := [$x109+0]
 	move 	$v0, $x119	# $v0 := $x119
 _loop.epilog:
 	jr 	$ra		# also uses: $v0,$s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7
 _main:
+	la 	$x130, _int_ops	# $x130 := _int_ops
+	la 	$x131, _add_pair_silly	# $x131 := _add_pair_silly
+	li 	$x132, 0		# $x132 := 0
+	move 	$a0, $x132	# $a0 := $x132
+	jalr 	$ra, $x131	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
+	move 	$x133, $v0	# $x133 := $v0
 	li 	$a0, 8		# $a0 := 8
 	jal 	alloc		# call alloc
-	move 	$x130, $v0	# $x130 := $v0
-	li 	$x131, 2		# $x131 := 2
-	sw 	$x131, 0($x130)	# [$x130+0] := $x131
-	li 	$x132, 4		# $x132 := 4
-	sw 	$x132, 4($x130)	# [$x130+4] := $x132
-	move 	$a0, $x130	# $a0 := $x130
-	li 	$x134, 0		# $x134 := 0
+	move 	$x134, $v0	# $x134 := $v0
+	li 	$x135, 2		# $x135 := 2
+	sw 	$x135, 0($x134)	# [$x134+0] := $x135
+	li 	$x136, 4		# $x136 := 4
+	sw 	$x136, 4($x134)	# [$x134+4] := $x136
 	move 	$a0, $x134	# $a0 := $x134
-	la 	$x136, _add_pair_silly	# $x136 := _add_pair_silly
-	jalr 	$ra, $x136	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
-	move 	$x135, $v0	# $x135 := $v0
-	jalr 	$ra, $x135	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
-	move 	$x133, $v0	# $x133 := $v0
-	move 	$a0, $x133	# $a0 := $x133
-	la 	$x138, _int_ops	# $x138 := _int_ops
-	jalr 	$ra, $x138	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
+	jalr 	$ra, $x133	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
 	move 	$x137, $v0	# $x137 := $v0
+	move 	$a0, $x137	# $a0 := $x137
+	jalr 	$ra, $x130	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
+	move 	$x138, $v0	# $x138 := $v0
+	la 	$x139, _fact	# $x139 := _fact
 	li 	$a0, 4		# $a0 := 4
 	jal 	alloc		# call alloc
-	move 	$x139, $v0	# $x139 := $v0
-	sw 	$x137, 0($x139)	# [$x139+0] := $x137
-	move 	$a0, $x139	# $a0 := $x139
-	la 	$x141, _fact	# $x141 := _fact
-	jalr 	$ra, $x141	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
 	move 	$x140, $v0	# $x140 := $v0
+	sw 	$x138, 0($x140)	# [$x140+0] := $x138
 	move 	$a0, $x140	# $a0 := $x140
-	la 	$x143, _loop	# $x143 := _loop
-	jalr 	$ra, $x143	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
-	move 	$x142, $v0	# $x142 := $v0
-	move 	$a0, $x142	# $a0 := $x142
-	la 	$x145, _printint	# $x145 := _printint
-	jalr 	$ra, $x145	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
-	move 	$x144, $v0	# $x144 := $v0
-	move 	$v0, $x142	# $v0 := $x142
+	jalr 	$ra, $x139	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
+	move 	$x141, $v0	# $x141 := $v0
+	la 	$x142, _loop	# $x142 := _loop
+	move 	$a0, $x141	# $a0 := $x141
+	jalr 	$ra, $x142	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
+	move 	$x143, $v0	# $x143 := $v0
+	la 	$x144, _printint	# $x144 := _printint
+	move 	$a0, $x143	# $a0 := $x143
+	jalr 	$ra, $x144	# ($s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7) := call $ra($a0,$a1,$a2,$a3,$t0,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$v0,$v1)
+	move 	$x145, $v0	# $x145 := $v0
+	move 	$v0, $x143	# $v0 := $x143
 _main.epilog:
 	jr 	$ra		# also uses: $v0,$s0,$s1,$s2,$s3,$s4,$s5,$s6,$s7
