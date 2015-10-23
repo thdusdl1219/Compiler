@@ -175,11 +175,30 @@ structure Codegen :> CODEGEN =
               | A.Get => let val r1 = gen_exp env (hd expl); val r = M.newReg()
                         in emit (M.Lw(r, (M.immed 0, r1))); r end
               | A.Set => let val r1 = gen_exp env (hd expl); val r2 = gen_exp env (List.nth(expl, 1)) in emit (M.Sw(r2, (M.immed 0, r1))); r1 end (* I don't know what is return.. *)
-              | _ => 
+              | A.Add => 
+                  let val mop = fun2mips_arith_op(oper); val r = M.newReg() 
+                    in (case (List.nth(expl,0), List.nth(expl, 1)) of
+                             (_, A.Int i) => if( i > 65535) then (emit(M.Arith3(mop, r, gen_exp env (List.nth(expl, 0)), gen_exp env (List.nth(expl, 1)))); r) else (emit(M.Arithi(M.Addi, r, gen_exp env (List.nth(expl, 0)), M.immed i));r)
+                           | (A.Int i, _) => if( i > 65535) then (emit(M.Arith3(mop, r, gen_exp env (List.nth(expl, 0)), gen_exp env (List.nth(expl, 1)))); r) else (emit(M.Arithi(M.Addi, r, gen_exp env (List.nth(expl, 1)), M.immed i)); r) 
+                           | (_, _) => (emit(M.Arith3(mop,r,gen_exp env (List.nth(expl, 0)),gen_exp env (List.nth(expl, 1))));r )
+                      )
+                    end
+              | A.Sub => 
+                  let val mop = fun2mips_arith_op(oper); val r = M.newReg(); val r2 = gen_exp env (List.nth(expl, 1)); 
+                    in if(List.nth(expl, 0) = A.Int 0) then (emit(M.Arith2(M.Neg, r, r2)); r) else (emit(M.Arith3(mop,r,gen_exp env (List.nth(expl, 0)),r2)); r) end
+              | A.Mul => 
                   let val mop = fun2mips_arith_op(oper); val r = M.newReg(); val r1 = gen_exp env (List.nth(expl, 0)); val r2 = gen_exp env (List.nth(expl, 1)); 
                     in emit(M.Arith3(mop,r,r1,r2));
                       r
                     end
+              | A.LT => 
+                  let val mop = fun2mips_arith_op(oper); val r = M.newReg(); val r1 = gen_exp env (List.nth(expl, 0)); val r2 = gen_exp env (List.nth(expl, 1)); 
+                    in emit(M.Arith3(mop,r,r1,r2));
+                      r
+                    end
+              | A.Eq => 
+                  let val mop = fun2mips_arith_op(oper); val r = M.newReg(); val r1 = gen_exp env (List.nth(expl, 0)) 
+                    in if(List.nth(expl, 1) = A.Int 0) then (emit(M.Arith2(M.Not, r, r1)); r) else (emit(M.Arith3(mop,r,r1,gen_exp env (List.nth(expl, 1)))); r) end
           )
         | gen (A.Tuple expl) = 
           let val r = M.newReg() 
@@ -190,10 +209,19 @@ structure Codegen :> CODEGEN =
           let val r1 = gen_exp env exp; val r = M.newReg()
             in emit(M.Lw(r, (M.immed (i * data_size), r1))); r end
 
-        | gen (A.If (exp1, exp2, exp3)) = 
-          let val r1 = gen_exp env exp1; val else_lab = M.freshlab (); val r = M.newReg(); val done_lab = M.freshlab ()
+        | gen (A.If (exp1, exp2, exp3)) =
+          (case (exp2, exp3) of
+               (A.Int(1), A.If(A.Int(i), A.Int(1), A.Int(0))) => let val r = M.newReg() in if(i > 65535) then (emit(M.Arith3(M.Or, r, gen_exp env exp1, gen_exp env (A.Int(i)))); r)  else (emit(M.Arithi(M.Ori, r, gen_exp env exp1, M.immed i)); r) end 
+             | (A.Int(1), A.If(e, A.Int(1), A.Int(0))) => let val r = M.newReg() in (emit(M.Arith3(M.Or,r, gen_exp env exp1, gen_exp env e)); r) end
+             | (A.If(A.Int(i), A.Int(1), A.Int(0)), A.Int(0)) => let val r = M.newReg() in if(i > 65535) then (emit(M.Arith3(M.And, r, gen_exp env exp1, gen_exp env (A.Int(i)))); r) else (emit(M.Arithi(M.Ori, r, gen_exp env exp1, M.immed i)); r) end
+             | (A.If(e, A.Int(1), A.Int(0)), A.Int(0)) => let val r = M.newReg() in (emit(M.Arith3(M.And,r, gen_exp env exp1, gen_exp env e)); r) end
+
+             | (_, A.Int(0)) => let val r1 = gen_exp env exp1; val r = M.newReg(); val done_lab = M.freshlab ()
+            in emit(M.Move(r, M.reg "$zero")); emit(M.Branchz(M.Eq, r1, done_lab)); emit(M.Move(r, gen_exp env exp2)) ; emit_label (done_lab); r end
+
+             | (_, _) => let val r1 = gen_exp env exp1; val else_lab = M.freshlab (); val r = M.newReg(); val done_lab = M.freshlab ()
             in emit(M.Branchz(M.Eq, r1, else_lab)); emit(M.Move(r, gen_exp env exp2)) ; emit(M.J(done_lab));
-            emit_label (else_lab) ; emit(M.Move(r, gen_exp env exp3)) ; emit_label (done_lab); r end
+            emit_label (else_lab) ; emit(M.Move(r, gen_exp env exp3)) ; emit_label (done_lab); r end)
         | gen (A.While(exp1, exp2)) = 
           let val r1 = gen_exp env exp1; val check_lab = M.freshlab (); val done_lab = M.freshlab (); val r = M.newReg() 
             in emit_label(check_lab); emit(M.Branchz(M.Eq, r1, done_lab));
