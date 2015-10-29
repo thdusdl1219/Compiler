@@ -198,7 +198,7 @@ structure Codegen :> CODEGEN =
                     end
               | A.Eq => 
                   let val mop = fun2mips_arith_op(oper); val r = M.newReg(); val r1 = gen_exp env (List.nth(expl, 0)) 
-                    in if(List.nth(expl, 1) = A.Int 0) then (emit(M.Arith2(M.Not, r, r1)); r) else (emit(M.Arith3(mop,r,r1,gen_exp env (List.nth(expl, 1)))); r) end
+                    in (emit(M.Arith3(mop,r,r1,gen_exp env (List.nth(expl, 1)))); r) end
           )
         | gen (A.Tuple expl) = 
           let val r = M.newReg() 
@@ -210,21 +210,12 @@ structure Codegen :> CODEGEN =
             in emit(M.Lw(r, (M.immed (i * data_size), r1))); r end
 
         | gen (A.If (exp1, exp2, exp3)) =
-          (case (exp2, exp3) of
-               (A.Int(1), A.If(A.Int(i), A.Int(1), A.Int(0))) => let val r = M.newReg() in if(i > 65535) then (emit(M.Arith3(M.Or, r, gen_exp env exp1, gen_exp env (A.Int(i)))); r)  else (emit(M.Arithi(M.Ori, r, gen_exp env exp1, M.immed i)); r) end 
-             | (A.Int(1), A.If(e, A.Int(1), A.Int(0))) => let val r = M.newReg() in (emit(M.Arith3(M.Or,r, gen_exp env exp1, gen_exp env e)); r) end
-             | (A.If(A.Int(i), A.Int(1), A.Int(0)), A.Int(0)) => let val r = M.newReg() in if(i > 65535) then (emit(M.Arith3(M.And, r, gen_exp env exp1, gen_exp env (A.Int(i)))); r) else (emit(M.Arithi(M.Ori, r, gen_exp env exp1, M.immed i)); r) end
-             | (A.If(e, A.Int(1), A.Int(0)), A.Int(0)) => let val r = M.newReg() in (emit(M.Arith3(M.And,r, gen_exp env exp1, gen_exp env e)); r) end
-
-             | (_, A.Int(0)) => let val r1 = gen_exp env exp1; val r = M.newReg(); val done_lab = M.freshlab ()
-            in emit(M.Move(r, M.reg "$zero")); emit(M.Branchz(M.Eq, r1, done_lab)); emit(M.Move(r, gen_exp env exp2)) ; emit_label (done_lab); r end
-
-             | (_, _) => let val r1 = gen_exp env exp1; val else_lab = M.freshlab (); val r = M.newReg(); val done_lab = M.freshlab ()
-            in emit(M.Branchz(M.Eq, r1, else_lab)); emit(M.Move(r, gen_exp env exp2)) ; emit(M.J(done_lab));
-            emit_label (else_lab) ; emit(M.Move(r, gen_exp env exp3)) ; emit_label (done_lab); r end)
+          let val else_lab = M.freshlab (); val r = M.newReg(); val done_lab = M.freshlab ()
+            in emit(M.Branchz(M.Eq, gen_exp env exp1, else_lab)); emit(M.Move(r, gen_exp env exp2)) ; emit(M.J(done_lab));
+            emit_label (else_lab) ; emit(M.Move(r, gen_exp env exp3)) ; emit_label (done_lab); r end
         | gen (A.While(exp1, exp2)) = 
-          let val r1 = gen_exp env exp1; val check_lab = M.freshlab (); val done_lab = M.freshlab (); val r = M.newReg() 
-            in emit_label(check_lab); emit(M.Branchz(M.Eq, r1, done_lab));
+          let val check_lab = M.freshlab (); val done_lab = M.freshlab (); val r = M.newReg() 
+            in emit_label(check_lab); emit(M.Branchz(M.Eq, gen_exp env exp1, done_lab));
             emit(M.Move(r, gen_exp env exp2)); emit(M.J(check_lab)); emit_label(done_lab); r end (* I don't know what is return... *)
         | gen (A.Call(exp1, exp2)) = 
           let val r1 = gen_exp env exp1; val r2 = gen_exp env exp2; val r = M.newReg() in
@@ -248,7 +239,7 @@ structure Codegen :> CODEGEN =
            let val ra_tmp = M.newReg(); val s0_tmp = M.newReg(); val s1_tmp = M.newReg(); val s2_tmp = M.newReg(); val s3_tmp = M.newReg(); val s4_tmp = M.newReg(); val s5_tmp = M.newReg(); val s6_tmp = M.newReg(); val s7_tmp = M.newReg(); val a0_tmp = M.newReg(); val fenv = Symbol.enter(fenv, x, Reg(a0_tmp))
             in 
            emit_label (fun_label f);
-(*           emit (M.Move(ra_tmp, M.reg "$ra"));
+           emit (M.Move(ra_tmp, M.reg "$ra"));
            emit (M.Move(s0_tmp, M.reg "$s0"));
            emit (M.Move(s1_tmp, M.reg "$s1"));
            emit (M.Move(s2_tmp, M.reg "$s2"));
@@ -257,9 +248,9 @@ structure Codegen :> CODEGEN =
            emit (M.Move(s5_tmp, M.reg "$s5"));
            emit (M.Move(s6_tmp, M.reg "$s6"));
            emit (M.Move(s7_tmp, M.reg "$s7"));
-           emit (M.Move(a0_tmp, M.reg "$a0")); *)
+           emit (M.Move(a0_tmp, M.reg "$a0")); 
            emit (M.Move(M.reg "$v0", gen_exp fenv (strip exp)));
-(*           emit (M.Move(M.reg "$ra", ra_tmp));
+           emit (M.Move(M.reg "$ra", ra_tmp));
            emit (M.Move(M.reg "$s0", s0_tmp));
            emit (M.Move(M.reg "$s1", s1_tmp));
            emit (M.Move(M.reg "$s2", s2_tmp));
@@ -267,7 +258,7 @@ structure Codegen :> CODEGEN =
            emit (M.Move(M.reg "$s4", s4_tmp));
            emit (M.Move(M.reg "$s5", s5_tmp));
            emit (M.Move(M.reg "$s6", s6_tmp));
-           emit (M.Move(M.reg "$s7", s7_tmp)); *)
+           emit (M.Move(M.reg "$s7", s7_tmp)); 
            emit_label (Symbol.symbol(Symbol.name (fun_label f) ^ ".epilog"));
            emit (M.Jr(M.reg("$ra"),M.reg "$v0" :: M.calleeSaved));
            finish_fun ()
