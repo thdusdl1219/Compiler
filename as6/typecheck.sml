@@ -178,7 +178,7 @@ struct
      (let val ctxt2 = Symbol.enter(ctxt, f, A.Arrowtp(tp1,tp2)) in (if(Symbol.name f = "main") then (if (sub(tp1,A.Inttp) andalso sub(tp2,A.Inttp)) then ctxt2 else (ErrorMsg.error(pos, "Main type error"); ctxt2)) else ctxt2) end) else (ErrorMsg.error(pos, "You have same function name"); ctxt) end
 
  fun build_global_context (fundecs) =
-    foldl do_another_fun (Symbol.enter(Symbol.empty, Symbol.symbol("printint"), A.Arrowtp(A.Inttp, A.Inttp))) fundecs
+    foldl do_another_fun (Symbol.enter(Symbol.empty, Symbol.symbol("printint"), A.Arrowtp(A.Inttp, A.Tupletp([])))) fundecs
 
  fun tc (fundecs : A.prog)  = 
   let val ctxt = build_global_context(fundecs) 
