@@ -219,7 +219,7 @@ structure Codegen :> CODEGEN =
             emit(M.Move(r, gen_exp env exp2)); emit(M.J(check_lab)); emit_label(done_lab); r end (* I don't know what is return... *)
         | gen (A.Call(exp1, exp2)) = 
           let val r1 = gen_exp env exp1; val r2 = gen_exp env exp2; val r = M.newReg() in
-            emit(M.Move(M.reg "$a0", r2)); emit(M.Jalr(M.reg "$ra", r1, M.callerSaved, M.calleeSaved)); emit(M.Move(r, M.reg "$v0")); r end (* jalr 잘 모르겠당. *) 
+            emit(M.Move(M.reg "$a0", r2)); emit(M.Jalr(M.reg "$ra", r1, M.reg "$v0" ::M.callerSaved, [M.reg "$a0"])); emit(M.Move(r, M.reg "$v0")); r end (* jalr 잘 모르겠당. *) 
         | gen (A.Let(id1, exp1, exp2)) = 
           let val env = Symbol.enter(env, id1, Reg(gen_exp env exp1)) in gen_exp env
           exp2 end

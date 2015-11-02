@@ -7,14 +7,95 @@ signature LIVENESS = sig
   val printgraph: (string->unit) -> IG.graph -> unit
 end
 
+   (* ErrorMsg.impossible "Liveness.analyze unimplemented" *)
 structure Liveness : LIVENESS = struct
   structure IG = Graph(Mips.RegSet)
   structure M = Mips
   structure RS = Mips.RegSet
+  structure FS = RedBlackSetFn(type ord_key = M.lab val compare = Symbol.compare)
+  structure FG = Graph(FS)
+
+ fun compute_live_in(M.Li(r, i)::M.Syscall::rest, live_out) (live_at : RS.set Symbol.table) (flow_graph : FG.graph) =
+   if (r = M.reg "$v0") then
+     (case M.syscall_def_use (M.immed2int i) of
+          SOME def_use => RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))
+        | NONE => ErrorMsg.impossible "Unknown Syscall")
+    else ErrorMsg.impossible "Syscall not preceded by li $v0" 
+
+ | compute_live_in(i::rest, live_at_end) (live_at : RS.set Symbol.table) (flow_graph : FG.graph) = (* ErrorMsg.impossible "Liveness.analyze unimplemented" *)
+  let val live_out = compute_live_in(rest, live_at_end) live_at flow_graph; val def_use = M.instr_def_use(i) in
+    (case i of
+      M.Branchz(_,_,lab) => (case Symbol.look(live_at, lab) of 
+                                  SOME set => RS.union(#use(def_use), RS.difference(RS.union(set,live_out), #def(def_use)))
+                                | NONE => RS.union(#use(def_use), RS.difference(RS.union(RS.empty,live_out), #def(def_use))))
+
+    | M.Branchu(_,_,_,lab) => (case Symbol.look(live_at, lab) of
+                                    SOME set => RS.union(#use(def_use), RS.difference(RS.union(set,live_out), #def(def_use)))
+                                  | NONE => RS.union(#use(def_use), RS.difference(RS.union(RS.empty,live_out), #def(def_use))))
+
+    | M.Branch(_,_,_,lab) => (case Symbol.look(live_at, lab) of 
+                                   SOME set => RS.union(#use(def_use), RS.difference(RS.union(set,live_out), #def(def_use)))
+                                 | NONE => RS.union(#use(def_use), RS.difference(RS.union(RS.empty,live_out), #def(def_use))))
+
+    | M.Jal(lab) => (case Symbol.look(live_at, lab) of
+                          SOME set => RS.union(#use(def_use), RS.difference(set, #def(def_use)))
+                        | NONE =>  RS.union(#use(def_use), RS.difference(RS.empty, #def(def_use))))
+
+    | _ => RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))) end
+ | compute_live_in(nil, live_at_end) (live_at : RS.set Symbol.table) (flow_graph : FG.graph) = live_at_end
+
+(*  let live_out = compute_live_in*)
+
+ fun print_set set = 
+   (RS.app (fn reg => (print " "; print (M.reg2name reg))) set; print "\n")
+
+ fun analyze_func {mention : M.reg -> unit, interfere: M.reg -> M.reg -> unit} (blocks :M.codeblock list) (live_at : RS.set Symbol.table) (flow_graph : FG.graph) (changed : bool) : (RS.set Symbol.table * bool) = 
+   case blocks of
+        (lab,block)::(next_lab, next_block)::t => (FG.mk_edge flow_graph {from=lab, to=next_lab}; 
+        let val next_live_at = Symbol.look(live_at, next_lab) in
+          (case next_live_at of
+            SOME set =>
+              let val new = compute_live_in(block, set) live_at flow_graph; val cur_live_at = Symbol.look(live_at, lab) in 
+                (case cur_live_at of
+                  SOME cur_set => (analyze_func {mention=mention, interfere=interfere} ((next_lab, next_block)::t) (Symbol.enter(live_at, lab, new)) flow_graph (changed orelse (not(RS.equal(cur_set, new)))))
+                | NONE => (analyze_func {mention=mention, interfere=interfere} ((next_lab, next_block)::t) (Symbol.enter(live_at, lab, new)) flow_graph true)) end
+          | NONE => 
+              let val new = compute_live_in(block, RS.empty) live_at flow_graph; val cur_live_at = Symbol.look(live_at, lab) in
+                (case cur_live_at of
+                  SOME cur_set => (print_set cur_set; analyze_func {mention=mention, interfere=interfere} ((next_lab, next_block)::t) (Symbol.enter(live_at, lab, new)) flow_graph (changed orelse (not(RS.equal(cur_set, new)))))
+                | NONE => ( analyze_func {mention=mention, interfere=interfere} ((next_lab, next_block)::t) (Symbol.enter(live_at, lab, new)) flow_graph true)) end
+          ) end)
+      | (lab,block)::[] => 
+          let val new = compute_live_in(block, RS.empty) live_at flow_graph; val cur_live_at = Symbol.look(live_at, lab) in 
+            (case cur_live_at of
+              SOME cur_set => ( analyze_func {mention=mention, interfere=interfere} [] (Symbol.enter(live_at, lab, new)) flow_graph (changed orelse (not(RS.equal(cur_set, new)))))
+            | NONE => ( analyze_func {mention=mention, interfere=interfere} [] (Symbol.enter(live_at, lab, new)) flow_graph true)) end
+      | [] => (live_at, changed )
+
+ fun printli say l (i:(Symbol.symbol * Mips.RegSet.set)) =
+   (say (Symbol.name(#1(i))); say ":";
+    IG.S.app (fn j => (say " "; say (M.reg2name j))) (#2(i));
+    say "\n")
+
+ fun print_live_at say live_at lab_list = 
+  let val live_at_list = map (fn lab => 
+  (case Symbol.look(live_at, lab) of
+        SOME set => (lab, set)
+      | NONE => (lab, RS.empty)
+  )) lab_list in
+   app (printli say live_at) live_at_list end
+ 
 
  fun analyze {mention: M.reg -> unit, interfere: M.reg -> M.reg -> unit}
              (blocks: M.codeblock list) =
-    ErrorMsg.impossible "Liveness.analyze unimplemented"
+    let val live_at = ref Symbol.empty; val flow_graph = FG.newGraph(); val changed = ref false in 
+      while not(!changed) do (
+      let val result = analyze_func {mention=mention,interfere=interfere} blocks (!live_at) flow_graph false in
+        live_at := #1(result);
+        changed := not(#2(result)) end
+      )
+(*    print_live_at print (!live_at) (map (fn (lab, _) => lab) blocks) *)
+    end
 
  fun printadj say g i = 
      (say (M.reg2name i); say ":";
