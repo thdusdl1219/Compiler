@@ -277,7 +277,9 @@ struct
    | Jalr(r1,r2,use,def) => {def=list2set(r1 :: def), use=list2set(r2::use)}
    | Syscall => ErrorMsg.impossible "Syscall"
    | Nop => {def=RegSet.empty, use=RegSet.empty}
-   | e => (instr2string e; {def=RegSet.empty, use=RegSet.empty})
+   | J _ => {def=RegSet.empty, use=RegSet.empty}
+ (*  | e => (print(instr2string e); {def=RegSet.empty, use=RegSet.empty})*)
+
    local val info =  [NONE,
    (* print_int *)    SOME{def=RegSet.empty, use=list2set[reg "$a0"]},
    (* print_float *)  NONE,
