@@ -29,7 +29,7 @@ structure Liveness : LIVENESS = struct
  let val live_out = compute_live_in(rest, live_at_end) {mention=mention, interfere=interfere} live_at flow_graph; val def_use_Li = M.instr_def_use(M.Li(r,i)) in
    if (r = M.reg "$v0") then
      (case M.syscall_def_use (M.immed2int i) of
-          SOME def_use => (make_mention mention (#use(def_use)); make_mention mention (#def(def_use)); make_mention mention (#def(def_use_Li)); make_interfere interfere (#def(def_use_Li)) (RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))); print("print live_out : "); print_set (#use(def_use)); print_set (RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))); RS.union(#use(def_use), RS.difference(live_out, RS.union(#def(def_use_Li),#def(def_use)))))
+          SOME def_use => (make_mention mention (#use(def_use)); make_mention mention (#def(def_use)); make_mention mention (#def(def_use_Li)); make_interfere interfere (#def(def_use_Li)) (RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))); RS.union(#use(def_use), RS.difference(live_out, RS.union(#def(def_use_Li),#def(def_use)))))
         | NONE => ErrorMsg.impossible "Unknown Syscall")
     else ErrorMsg.impossible "Syscall not preceded by li $v0" 
  end
@@ -51,9 +51,10 @@ structure Liveness : LIVENESS = struct
     | M.J(lab) => (case Symbol.look(live_at, lab) of
                         SOME set => RS.union(#use(def_use), RS.difference(set, #def(def_use)))
                       | NONE => RS.union(#use(def_use), RS.difference(RS.empty, #def(def_use)))) 
-    | M.Jal(lab) => (case Symbol.look(live_at, lab) of
-                          SOME set => (print("print set : "); print_set set;RS.union(#use(def_use), RS.difference(RS.union(set,live_out), #def(def_use))))
-                        | NONE =>  (let val def_use = {use=RS.union(M.list2set([M.reg "$v0"]), #use(def_use)), def= RS.union(M.list2set(M.reg "$a0"::M.callerSaved), #def(def_use)) } in ( make_mention mention (#def(def_use)); make_mention mention (#use(def_use)); make_interfere interfere (#def(def_use)) live_out; RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))) end)) 
+    | M.Jal(lab) =>  ( let val def_use = {use=RS.union(M.list2set([M.reg "$v0"]), #use(def_use)), def= RS.union(M.list2set(M.reg "$a0"::M.callerSaved), #def(def_use)) } in ( make_mention mention (#def(def_use)); make_mention mention (#use(def_use)); make_interfere interfere (#def(def_use)) live_out;
+        (case Symbol.look(live_at, lab) of
+                          SOME set => (RS.union(#use(def_use), RS.difference(RS.union(set,live_out), #def(def_use))))
+                        | NONE => RS.union(#use(def_use), RS.difference(live_out, #def(def_use))))) end ) 
 
     | _ => RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))) end
  | compute_live_in(nil, live_at_end) {mention : M.reg -> unit, interfere : M.reg -> M.reg -> unit} (live_at : RS.set Symbol.table) (flow_graph : FG.graph) : RS.set = live_at_end
@@ -74,7 +75,7 @@ structure Liveness : LIVENESS = struct
           | NONE => 
               let val new = compute_live_in(block, RS.empty) {mention=mention, interfere=interfere} live_at flow_graph; val cur_live_at = Symbol.look(live_at, lab) in
                 (case cur_live_at of
-                  SOME cur_set => (print_set cur_set; analyze_func {mention=mention, interfere=interfere} ((next_lab, next_block)::t) (Symbol.enter(live_at, lab, new)) flow_graph (changed orelse (not(RS.equal(cur_set, new)))))
+                  SOME cur_set => (analyze_func {mention=mention, interfere=interfere} ((next_lab, next_block)::t) (Symbol.enter(live_at, lab, new)) flow_graph (changed orelse (not(RS.equal(cur_set, new)))))
                 | NONE => ( analyze_func {mention=mention, interfere=interfere} ((next_lab, next_block)::t) (Symbol.enter(live_at, lab, new)) flow_graph true)) end
           ) end)
       | (lab,block)::[] => 

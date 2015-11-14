@@ -453,7 +453,8 @@ def run_test(filename):
     global pass_test
     global fail_test
 
-    assembly_filename = filename + ".noregalloc.s"
+    #assembly_filename = filename + ".noregalloc.s"
+    assembly_filename = filename + ".s"
     output_filename = filename + ".out"
 
     if is_check:

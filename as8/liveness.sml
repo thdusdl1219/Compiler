@@ -51,9 +51,10 @@ structure Liveness : LIVENESS = struct
     | M.J(lab) => (case Symbol.look(live_at, lab) of
                         SOME set => RS.union(#use(def_use), RS.difference(set, #def(def_use)))
                       | NONE => RS.union(#use(def_use), RS.difference(RS.empty, #def(def_use)))) 
-    | M.Jal(lab) => (case Symbol.look(live_at, lab) of
+    | M.Jal(lab) =>  ( let val def_use = {use=RS.union(M.list2set([M.reg "$v0"]), #use(def_use)), def= RS.union(M.list2set(M.reg "$a0"::M.callerSaved), #def(def_use)) } in ( make_mention mention (#def(def_use)); make_mention mention (#use(def_use)); make_interfere interfere (#def(def_use)) live_out;
+        (case Symbol.look(live_at, lab) of
                           SOME set => (print("print set : "); print_set set;RS.union(#use(def_use), RS.difference(RS.union(set,live_out), #def(def_use))))
-                        | NONE =>  (let val def_use = {use=RS.union(M.list2set([M.reg "$v0"]), #use(def_use)), def= RS.union(M.list2set(M.reg "$a0"::M.callerSaved), #def(def_use)) } in ( make_mention mention (#def(def_use)); make_mention mention (#use(def_use)); make_interfere interfere (#def(def_use)) live_out; RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))) end)) 
+                        | NONE => RS.union(#use(def_use), RS.difference(live_out, #def(def_use))))) end ) 
 
     | _ => RS.union(#use(def_use), RS.difference(live_out, #def(def_use)))) end
  | compute_live_in(nil, live_at_end) {mention : M.reg -> unit, interfere : M.reg -> M.reg -> unit} (live_at : RS.set Symbol.table) (flow_graph : FG.graph) : RS.set = live_at_end
