@@ -25,9 +25,9 @@ struct
        val palette = M.list2set (M.reg"$ra"::M.callerSaved @ M.calleeSaved)
        val coloring = Color.color {interference = ig, moves=movegraph, 
 	                  spillCost = spillCost, palette=palette}
-(*       val _ = Color.verify{complain=ErrorMsg.impossible, func=instrL, 
+       val _ = Color.verify{complain=ErrorMsg.impossible, func=instrL, 
                             spillCost=spillCost, palette=palette, 
-                            coloring=coloring}*)
+                            coloring=coloring}
        val _ = print "Register Allocation verified.\n"
        val {alloc,spills} = coloring
        val _ = (print "Spills: "; 
