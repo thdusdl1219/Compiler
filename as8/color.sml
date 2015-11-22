@@ -36,8 +36,8 @@ struct
               0 => let val colorResult = {alloc = RT.enter(#alloc(colorResult),reg, reg), spills = RS.add(#spills(colorResult), reg)} in assignColor (tail, ig, palette, spill, precolored, colorResult) end
             | _ => let val colorResult = {alloc = RT.enter(#alloc(colorResult), reg, hd (RS.listItems okColor)), spills = #spills(colorResult)} in assignColor (tail, ig, palette, spill, precolored, colorResult) end )
         end
-    | [] => let val allocTab = (RS.foldl (fn (reg, table) => RT.enter(table, reg, reg)) (#alloc(colorResult)) spill) in 
-      {alloc = allocTab, spills = RS.union(#spills(colorResult), spill)} end
+    | [] => 
+      {alloc = #alloc(colorResult), spills = RS.union(#spills(colorResult), spill)} 
    (*ErrorMsg.impossible "Color.assignColor unimplemented"*)
    
 
@@ -64,7 +64,7 @@ let val reg = foldl (fn (a, b) => if((spillCost a) > (spillCost b)) then b else 
   in
    case (RS.numItems(lowdegs), RS.numItems(highdegs)) of
         (0, 0) => let val allReg = M.list2set M.registers; val precolored = RS.difference(nodes(), RS.difference(nodes(), allReg)); val alloc = (RS.foldl (fn (reg, table) => RT.enter(table, reg, reg)) (RT.empty) precolored);
-          val alloc_spills = assignColor (stack, org_ig, palette, spill, alloc,{alloc = RT.empty, spills = RS.empty}) in {alloc = #alloc(alloc_spills), spills = #spills(alloc_spills)} end
+          val alloc_spills = assignColor (stack, org_ig, palette, spill, alloc,{alloc = RT.empty, spills = RS.empty}) in alloc_spills  end
 
       | (0, _) => let val spill = spillF (highdegs, spill, adj, redgs, spillCost); val lowdegs_highdegs = makeLowdegsHighdegs (adj, nodes, palette) in 
         (coloringFunction (#lowdegs(lowdegs_highdegs), #highdegs(lowdegs_highdegs), org_ig, ig, stack, spill, palette, spillCost)) end
@@ -73,7 +73,7 @@ let val reg = foldl (fn (a, b) => if((spillCost a) > (spillCost b)) then b else 
         coloringFunction (#lowdegs(lowdegs_highdegs), #highdegs(lowdegs_highdegs), org_ig, ig, stack, spill, palette, spillCost) end
   end
       
-
+(*
  fun check_alloc_palette (ig: IG.graph, alloc : M.allocation, spills : RS.set, palette: RS.set) : unit =
    let val regSet = IG.nodes ig; val allocSet = RS.difference(regSet, spills); val allReg = M.list2set M.registers; val precolored = RS.difference(regSet, RS.difference(regSet, allReg)); val allocSet = RS.difference(allocSet, precolored) in
      RS.app (fn reg => 
@@ -82,21 +82,21 @@ let val reg = foldl (fn (a, b) => if((spillCost a) > (spillCost b)) then b else 
          | NONE => () 
      ) allocSet end 
 (* alloc has allocReg and spillReg *)
- fun check_func_coloring (ig : IG.graph, alloc : M.allocation, palette : RS.set) : unit =
+ fun check_func_coloring (ig : IG.graph, alloc : M.allocation, spills : RS.set, palette : RS.set) : unit =
   let val regSet = IG.nodes ig; val virtualSet = RS.filter (fn reg => M.isvirtual reg) regSet; val allReg = M.list2set M.registers; 
   val nonPrecolored = RS.difference(regSet, allReg) in
     RS.app (fn reg => 
       case RT.look(alloc, reg) of
            SOME(allocReg) => () 
-         | NONE => ErrorMsg.impossible "virtual reg isn't in alloc"
+         | NONE => if(RS.member(spills, reg)) then () else ErrorMsg.impossible "virtual reg isn't in alloc"
     ) virtualSet ;
     RS.app (fn reg =>
       case RT.look(alloc, reg) of
            SOME(allocReg) => () 
-         | NONE => ErrorMsg.impossible (M.reg2name reg ^ "no precolored reg isn't in alloc")
+         | NONE => if(RS.member(spills, reg)) then () else ErrorMsg.impossible (M.reg2name reg ^ "no precolored reg isn't in alloc")
     ) nonPrecolored  end
 
- fun check_interfere_coloring (ig : IG.graph, alloc : M.allocation) : unit =
+ fun check_interfere_coloring (ig : IG.graph, alloc : M.allocation, spills : RS.set) : unit =
  let val regSet = IG.nodes ig; val allReg = M.list2set M.registers; val precolored = RS.difference(regSet, RS.difference(regSet, allReg)); val precolored = (RS.foldl (fn (reg, table) => RT.enter(table, reg, reg)) (RT.empty) precolored) in 
    RS.app (fn reg =>
     let val adjSet = RS.filter (fn adjreg => not (adjreg = reg)) (IG.adj ig reg);
@@ -113,38 +113,90 @@ let val reg = foldl (fn (a, b) => if((spillCost a) > (spillCost b)) then b else 
           )
         ) adjSet )
         in
-          let val colorReg = 
+          let val tmpReg = M.newReg(); val colorReg = 
             (case RT.look(precolored, reg) of
-              SOME(colorReg) => colorReg
+              SOME(colorReg) => SOME(colorReg)
             | NONE =>
                 (case RT.look(alloc, reg) of
-                    SOME(colorReg) => colorReg
-                  | NONE => ErrorMsg.impossible (M.reg2name reg ^ " reg ins't in alloc")
+                    SOME(colorReg) => SOME(colorReg)
+                  | NONE => if(RS.member(spills, reg)) then NONE else ErrorMsg.impossible (M.reg2name reg ^ " reg ins't in alloc")
                 )
             ) in
-              if(RS.member(colorSet, colorReg)) then (print_set colorSet; ErrorMsg.impossible (M.reg2name reg ^ "interfere reg has same color")) else () end
+              case colorReg of
+                  SOME(colorReg) =>
+              if(RS.member(colorSet, colorReg)) then (print_set colorSet; ErrorMsg.impossible (M.reg2name reg ^ "interfere reg has same color")) else () 
+                | NONE => ()
+          end
     end 
    ) regSet 
  end
-
+ *)
 
  fun check_spillcost (spills : RS.set, spillCost: M.reg -> int) : unit =
    RS.app (fn spillReg => if(spillCost spillReg >= spillCostInfinity)
     then ErrorMsg.impossible "spillCost overflow spillCostInfinity"
     else ()) spills
 
+ fun check_alloc_palette (r : M.reg, alloc : M.allocation, palette : RS.set) : unit =
+   case RT.look(alloc, r) of
+        SOME(allocReg) => if(RS.member(palette, allocReg)) then () else ErrorMsg.impossible "allocReg isn't in palette"
+      | NONE => ()
+
+ fun check_func_coloring (r : M.reg, alloc : M.allocation, spills : RS.set) : unit =
+   if(M.isvirtual r) then
+     case RT.look(alloc, r) of
+          SOME(allocReg) => ()
+        | NONE => if(RS.member(spills, r)) then () else ErrorMsg.impossible "virtual reg isn't in alloc & spills"
+   else
+     case RT.look(alloc, r) of
+          SOME(allocReg) => ErrorMsg.impossible "precolored reg can't be in alloc"
+        | NONE => if(RS.member(spills, r)) then ErrorMsg.impossible "precolored reg can't be in spill" else ()
+
+ fun check_interfere_coloring (r1 : M.reg, r2 : M.reg, alloc : M.allocation, spills : RS.set) : unit =
+   if(r1 = r2) then ( )
+   else if(RS.member(spills, r1)) then ( ) 
+   else if(RS.member(spills, r2)) then ( )
+   else
+    case (M.isvirtual(r1), M.isvirtual(r2)) of
+         (true, true) => 
+         (case (RT.look(alloc, r1)) of 
+          SOME(colorReg) => (case (RT.look(alloc, r2)) of 
+                                  SOME(colorReg2) => if(colorReg = colorReg2) then ( ErrorMsg.impossible "clover 1")
+                                                 else ()
+                                | NONE => ErrorMsg.impossible "clover 2" )
+        | NONE => ErrorMsg.impossible "clover 3" 
+          )
+       | (true, false) => 
+         (case (RT.look(alloc, r1)) of 
+               SOME(colorReg) => if(colorReg = r2) then ErrorMsg.impossible("clover 1") 
+                                 else ()
+             | NONE => ErrorMsg.impossible("clover 3")
+             )
+       | (false, true) => 
+         (case (RT.look(alloc, r2)) of 
+               SOME(colorReg) => if(colorReg = r1) then ErrorMsg.impossible("clover 1") 
+                                 else ()
+             | NONE => ErrorMsg.impossible("clover 3")
+             )
+       | (false, false) => ()
 
  fun verify {complain: string -> unit,
              func: M.funcode, 
              spillCost: M.reg -> int,
              palette: RS.set,
 	     coloring={alloc: M.allocation, spills: RS.set}} : unit =
-       let val ig = Liveness.interference_graph func
-           val _ = check_alloc_palette (ig, alloc, spills, palette)
-           val _ = check_func_coloring (ig, alloc, palette)
-           val _ = check_interfere_coloring(ig, alloc)
-           val _ = check_spillcost (spills, spillCost)
-       in () end
+       let
+         val _ = check_spillcost(spills, spillCost)
+         fun interfere_verify (r1 : M.reg) (r2 : M.reg) =
+            let 
+              val _ = check_interfere_coloring(r1, r2, alloc, spills) 
+            in () end
+         fun mention_verify (r : M.reg) =
+            let
+              val _ = check_alloc_palette(r, alloc, palette)
+              val _ = check_func_coloring(r, alloc, spills)
+            in () end
+       in Liveness.analyze {mention = mention_verify, interfere = interfere_verify} func end
 
  fun color ({interference = ig: IG.graph,
              moves: IG.graph,
