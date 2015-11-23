@@ -154,7 +154,7 @@ struct
               | _ => (ErrorMsg.error (pos, "You need Tupletp but type is "^tp2string(exptype)); A.Inttp)) end
         | A.Call (exp1, exp2) => let val exp1type = tc_exp ctxt pos exp1 in 
           (case exp1type of
-                A.Arrowtp (tp1, tp2) => let val exptype = tc_exp ctxt pos exp2 in if(sub((tc_exp ctxt pos exp2),tp1)) then tp2 else (ErrorMsg.error (pos, tp2string(exptype) ^" isn't subtype of "^tp2string(tp1)); tp2) end
+                A.Arrowtp (tp1, tp2) => let val exptype = tc_exp ctxt pos exp2 in if(sub(exptype,tp1)) then tp2 else (ErrorMsg.error (pos, tp2string(exptype) ^" isn't subtype of "^tp2string(tp1)); tp2) end
               | _ => (ErrorMsg.error (pos, "exp1 type isn't function type!"); A.Inttp)) end
         | A.If (exp1, exp2, exp3) => let val exptype2 = tc_exp ctxt pos exp1 in if (sub(exptype2,A.Inttp)) then (let val exptype = tc_exp ctxt pos exp2 in (join print (exptype, tc_exp ctxt pos exp3)) end) else (ErrorMsg.error (pos, tp2string(exptype2)^" isn't subtype of "^tp2string(A.Inttp)); A.Tupletp([])) end
         | A.While (exp1, exp2) => let val exptype1 = tc_exp ctxt pos exp1 in if (sub(exptype1, A.Inttp)) then (

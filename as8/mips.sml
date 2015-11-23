@@ -313,8 +313,7 @@ struct
 	       then case RegTb.look(table,r) of SOME x => x 
                   (*  | NONE => ErrorMsg.impossible ("rename_regs: "^
 	                              reg2name r)*)
-                    | NONE => (print ("rename_regs: "^
-	                              reg2name r); r)
+                    | NONE => (r)
 	       else r
  in
   fn Arith2(i,rd,rs) => Arith2(i, f rd, f rs)
