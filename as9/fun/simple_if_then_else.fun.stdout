@@ -1,0 +1,548 @@
+Standard ML of New Jersey v110.76 [built: Wed Oct 23 00:32:24 2013]
+[scanning /home/thdusdl1219/Compiler/as9/sources.cm]
+[library $/ml-yacc-lib.cm is stable]
+[attempting to load plugin $/lex-ext.cm]
+[library $/lex-ext.cm is stable]
+[library $smlnj/cm/tools.cm is stable]
+[library $smlnj/internal/cm-lib.cm is stable]
+[library $SMLNJ-BASIS/basis.cm is stable]
+[plugin $/lex-ext.cm loaded successfully]
+[attempting to load plugin $/mllex-tool.cm]
+[library $/mllex-tool.cm is stable]
+[plugin $/mllex-tool.cm loaded successfully]
+[attempting to load plugin $/grm-ext.cm]
+[library $/grm-ext.cm is stable]
+[plugin $/grm-ext.cm loaded successfully]
+[attempting to load plugin $/mlyacc-tool.cm]
+[library $/mlyacc-tool.cm is stable]
+[plugin $/mlyacc-tool.cm loaded successfully]
+[library $SMLNJ-LIB/Util/smlnj-lib.cm is stable]
+[library $SMLNJ-ML-YACC-LIB/ml-yacc-lib.cm is stable]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):fun.grm.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):errormsg.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):fun.lex.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):table.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):table.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):symbol.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):mips.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):mips.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):absyn.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):fun.grm.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):parse.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):graph.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):graph.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):liveness.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):color.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):color.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):regalloc.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):typecheck.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):codegen.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):compile.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):heap.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):heap.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):eval.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):eval.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):funpp.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):pp.sig]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):pp.sml]
+[loading /home/thdusdl1219/Compiler/as9/(sources.cm):funpp.sml]
+[New bindings added.]
+- ################## LIVENESS: main
+################## INTERFERENCE GRAPH 
+$v0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $gp $ra $x0
+$v1: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$a0: $v0 $a0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $gp $x0
+$a1: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$a2: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$a3: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t0: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t1: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t2: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t3: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t4: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t5: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t6: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t7: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$s0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x0
+$s1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x0
+$s2: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x0
+$s3: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x0
+$s4: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x0
+$s5: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x0
+$s6: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x0
+$s7: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x0
+$t8: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$t9: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $x0
+$gp: $v0 $a0 $x0
+$ra: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x0
+$x0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $gp $ra $x0
+###### Move graph
+$ra: $x0
+$x0: $ra
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x0
+reg : $x0reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $gp $ra $x0
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+Register Allocation verified.
+Spills: $x0 
+################## LIVENESS: main
+################## INTERFERENCE GRAPH 
+$v0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $gp $sp $ra
+$v1: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$a0: $v0 $a0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $gp $sp
+$a1: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$a2: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$a3: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t0: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t1: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t2: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t3: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t4: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t5: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t6: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t7: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$s0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$s1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$s2: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$s3: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$s4: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$s5: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$s6: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$s7: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$t8: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$t9: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp
+$gp: $v0 $a0
+$sp: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra
+$ra: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp $ra
+###### Move graph
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+Spills: 
+hi
+################## LIVENESS: alloc
+################## INTERFERENCE GRAPH 
+$v0: $v0 $a0 $t0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $gp $ra
+$a0: $v0
+$t0: $v0 $t0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $gp $ra
+$s0: $v0 $t0
+$s1: $v0 $t0
+$s2: $v0 $t0
+$s3: $v0 $t0
+$s4: $v0 $t0
+$s5: $v0 $t0
+$s6: $v0 $t0
+$s7: $v0 $t0
+$gp: $v0 $t0
+$ra: $v0 $t0
+###### Move graph
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+Register Allocation verified.
+Spills: 
+################## LIVENESS: _printint
+################## INTERFERENCE GRAPH 
+$v0: $v0 $a0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra
+$a0: $v0 $a0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra
+$s0: $v0 $a0
+$s1: $v0 $a0
+$s2: $v0 $a0
+$s3: $v0 $a0
+$s4: $v0 $a0
+$s5: $v0 $a0
+$s6: $v0 $a0
+$s7: $v0 $a0
+$ra: $v0 $a0
+###### Move graph
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+Register Allocation verified.
+Spills: 
+################## LIVENESS: _main
+################## INTERFERENCE GRAPH 
+$v0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$v1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$a0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x41 $x49
+$a1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$a2: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$a3: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t2: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t3: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t4: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t5: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t6: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t7: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$s0: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x1 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+$s1: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x1 $x2 $x4 $x5 $x6 $x7 $x8 $x9
+$s2: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x1 $x2 $x3 $x5 $x6 $x7 $x8 $x9
+$s3: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x1 $x2 $x3 $x4 $x6 $x7 $x8 $x9
+$s4: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x1 $x2 $x3 $x4 $x5 $x7 $x8 $x9
+$s5: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x8 $x9
+$s6: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x9
+$s7: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8
+$t8: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$t9: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$ra: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$x1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x2: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x3: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x4: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x5: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x6: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x7: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x8: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x9: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x10 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60 $x61 $x62
+$x10: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+$x11: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x15 $x16 $x17 $x18 $x19 $x20 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49
+$x12: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12
+$x13: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x14 $x21 $x22 $x23 $x24 $x25 $x26 $x27 $x28 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x55
+$x14: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x14
+$x15: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x15
+$x16: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x16 $x17
+$x17: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x16 $x17
+$x18: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x18
+$x19: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x19
+$x20: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x20
+$x21: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x22 $x29 $x30 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x54 $x55 $x56
+$x22: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x22
+$x23: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x23
+$x24: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x24 $x25
+$x25: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x24 $x25
+$x26: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x26
+$x27: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x27
+$x28: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x28
+$x29: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x30 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x53 $x54 $x55 $x56 $x57
+$x30: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x30
+$x31: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x31
+$x32: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x32
+$x33: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x33
+$x34: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x34
+$x35: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x35
+$x36: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x36
+$x37: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x37
+$x38: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x39 $x40 $x41 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x49 $x52 $x53 $x54 $x55 $x56 $x57 $x58
+$x39: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x39
+$x40: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x40 $x41 $x49 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59
+$x41: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x40 $x41
+$x42: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x42
+$x43: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x43
+$x44: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x44
+$x45: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x45
+$x46: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x46
+$x47: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x47
+$x48: $v0 $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x48
+$x49: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x13 $x21 $x29 $x38 $x40 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+$x50: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x49 $x50
+$x51: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x40 $x49 $x51 $x60
+$x52: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x38 $x40 $x49 $x52 $x59
+$x53: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x29 $x38 $x40 $x49 $x53 $x58
+$x54: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x21 $x29 $x38 $x40 $x49 $x54 $x57
+$x55: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x13 $x21 $x29 $x38 $x40 $x49 $x55 $x56
+$x56: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x21 $x29 $x38 $x40 $x49 $x55 $x56
+$x57: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x29 $x38 $x40 $x49 $x54 $x57
+$x58: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x38 $x40 $x49 $x53 $x58
+$x59: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x40 $x49 $x52 $x59
+$x60: $v0 $v1 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x49 $x51 $x60
+$x61: $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+$x62: $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x62
+###### Move graph
+$v0: $x11 $x13 $x21 $x29 $x38 $x40 $x61 $x62
+$a0: $x10 $x50
+$s0: $x2
+$s1: $x3
+$s2: $x4
+$s3: $x5
+$s4: $x6
+$s5: $x7
+$s6: $x8
+$s7: $x9
+$ra: $x1
+$x1: $ra
+$x2: $s0
+$x3: $s1
+$x4: $s2
+$x5: $s3
+$x6: $s4
+$x7: $s5
+$x8: $s6
+$x9: $s7
+$x10: $a0
+$x11: $v0
+$x13: $v0
+$x14: $x18 $x20
+$x18: $x14
+$x20: $x14
+$x21: $v0
+$x22: $x27 $x28
+$x27: $x22
+$x28: $x22
+$x29: $v0
+$x30: $x32 $x33
+$x32: $x30
+$x33: $x30 $x36 $x37
+$x36: $x33
+$x37: $x33
+$x38: $v0
+$x40: $v0
+$x41: $x43 $x48
+$x43: $x41 $x46 $x47
+$x46: $x43
+$x47: $x43
+$x48: $x41
+$x50: $a0
+$x61: $v0
+$x62: $v0
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+reg : $x1reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+reg : $x9reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $t8 $t9 $ra $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+reg : $x8reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s7 $t8 $t9 $ra $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x50 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x50
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x2 $x3 $x4 $x5 $x6 $x7 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+reg : $x7reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s6 $s7 $t8 $t9 $ra $x2 $x3 $x4 $x5 $x6 $x7 $x11 $x12 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x51 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59 $x60
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x12 $x60
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x51
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x2 $x3 $x4 $x5 $x6 $x11 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59
+reg : $x6reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s5 $s6 $s7 $t8 $t9 $ra $x2 $x3 $x4 $x5 $x6 $x11 $x13 $x14 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x52 $x53 $x54 $x55 $x56 $x57 $x58 $x59
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x14 $x59
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x52
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x2 $x3 $x4 $x5 $x11 $x13 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x53 $x54 $x55 $x56 $x57 $x58
+reg : $x5reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x2 $x3 $x4 $x5 $x11 $x13 $x21 $x22 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x53 $x54 $x55 $x56 $x57 $x58
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x22 $x58
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x53
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x2 $x3 $x4 $x11 $x13 $x21 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x54 $x55 $x56 $x57
+reg : $x4reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x2 $x3 $x4 $x11 $x13 $x21 $x29 $x30 $x38 $x39 $x40 $x41 $x49 $x54 $x55 $x56 $x57
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x30 $x57
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x54
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x2 $x3 $x11 $x13 $x21 $x29 $x38 $x39 $x40 $x41 $x49 $x55 $x56
+reg : $x3reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x2 $x3 $x11 $x13 $x21 $x29 $x38 $x39 $x40 $x41 $x49 $x55 $x56
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x39 $x56
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x55
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+highdegs :  $x2 $x11 $x13 $x21 $x29 $x38 $x40 $x41 $x49
+reg : $x2reg adj $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra $x2 $x11 $x13 $x21 $x29 $x38 $x40 $x41 $x49
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x40 $x41 $x49
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+lowdegs :  $x11 $x13 $x21 $x29 $x38
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+stack :  $x11 $x13 $x21 $x29 $x38 $x40 $x41 $x49 $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x11$x11$s0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x13 $x21 $x29 $x38 $x40 $x41 $x49 $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x13$x13$s1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x21 $x29 $x38 $x40 $x41 $x49 $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x21$x21$s2hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x29 $x38 $x40 $x41 $x49 $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x29$x29$s3hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x38 $x40 $x41 $x49 $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x38$x38$s4hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x40 $x41 $x49 $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x40$x40$a0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x41 $x49 $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x41$x41$s5hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x49 $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x49$x49$s5hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x55 $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x55$x55$s0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x39 $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x39$x39$s5hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x56 $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x56$x56$s1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x54 $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x54$x54$s0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x30 $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x30$x30$s4hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x57 $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x57$x57$s1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x53 $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x53$x53$s0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x22 $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x22$x22$s3hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x58 $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x58$x58$s1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x52 $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x52$x52$s0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x14 $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x14$x14$s2hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x59 $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x59$x59$s1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x51 $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x51$x51$s0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x12 $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x12$x12$s1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x60 $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x60$x60$a0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x50 $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x50$x50$a0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x10 $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x10$x10$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x15 $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x15$x15$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x16 $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x16$x16$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x17 $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x17$x17$a0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x18 $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x18$x14$v1spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x19 $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x19$x19$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x20 $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x20$x14$v1spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x23 $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x23$x23$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x24 $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x24$x24$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x25 $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x25$x25$a0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x26 $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x26$x26$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x27 $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x27$x22$v1spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x28 $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x28$x22$v1spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x31 $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x31$x31$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x32 $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x32$x30$v1spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x33 $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x33$x30$v1spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x34 $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x34$x34$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x35 $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x35$x35$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x36 $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x36$x36$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x37 $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x37$x37$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x42 $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x42$x42$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x43 $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x43$x41$v1spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x44 $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x44$x44$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x45 $x46 $x47 $x48 $x61 $x62
+getalias : $x45$x45$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x46 $x47 $x48 $x61 $x62
+getalias : $x46$x46$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x47 $x48 $x61 $x62
+getalias : $x47$x47$v1hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x48 $x61 $x62
+getalias : $x48$x41$v1spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x61 $x62
+getalias : $x61$x61$v0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+stack :  $x62
+getalias : $x62$x62$v0hi
+spillset :  $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9
+Register Allocation verified.
+Spills: $x1 $x2 $x3 $x4 $x5 $x6 $x7 $x8 $x9 
+rename_regs : $x10rename_regs : $x12rename_regs : $x11rename_regs : $x12rename_regs : $x11rename_regs : $x16rename_regs : $x11rename_regs : $x17rename_regs : $x15rename_regs : $x16rename_regs : $x17rename_regs : $x15rename_regs : $x18rename_regs : $x14rename_regs : $x18rename_regs : $x19rename_regs : $x19rename_regs : $x11rename_regs : $x20rename_regs : $x14rename_regs : $x20rename_regs : $x13rename_regs : $x14rename_regs : $x13rename_regs : $x24rename_regs : $x13rename_regs : $x25rename_regs : $x23rename_regs : $x24rename_regs : $x25rename_regs : $x23rename_regs : $x26rename_regs : $x26rename_regs : $x13rename_regs : $x27rename_regs : $x22rename_regs : $x27rename_regs : $x28rename_regs : $x22rename_regs : $x28rename_regs : $x21rename_regs : $x22rename_regs : $x21rename_regs : $x31rename_regs : $x21rename_regs : $x31rename_regs : $x32rename_regs : $x30rename_regs : $x32rename_regs : $x34rename_regs : $x34rename_regs : $x21rename_regs : $x35rename_regs : $x35rename_regs : $x36rename_regs : $x33rename_regs : $x36rename_regs : $x37rename_regs : $x33rename_regs : $x37rename_regs : $x30rename_regs : $x33rename_regs : $x29rename_regs : $x30rename_regs : $x29rename_regs : $x39rename_regs : $x38rename_regs : $x39rename_regs : $x38rename_regs : $x42rename_regs : $x29rename_regs : $x42rename_regs : $x44rename_regs : $x44rename_regs : $x38rename_regs : $x45rename_regs : $x45rename_regs : $x46rename_regs : $x43rename_regs : $x46rename_regs : $x47rename_regs : $x43rename_regs : $x47rename_regs : $x41rename_regs : $x43rename_regs : $x48rename_regs : $x41rename_regs : $x48rename_regs : $x40rename_regs : $x41rename_regs : $x40rename_regs : $x49rename_regs : $x55rename_regs : $x11rename_regs : $x56rename_regs : $x13rename_regs : $x54rename_regs : $x55rename_regs : $x56rename_regs : $x57rename_regs : $x21rename_regs : $x53rename_regs : $x54rename_regs : $x57rename_regs : $x58rename_regs : $x29rename_regs : $x52rename_regs : $x53rename_regs : $x58rename_regs : $x59rename_regs : $x38rename_regs : $x51rename_regs : $x52rename_regs : $x59rename_regs : $x60rename_regs : $x40rename_regs : $x50rename_regs : $x51rename_regs : $x60rename_regs : $x50rename_regs : $x49rename_regs : $x61rename_regs : $x62rename_regs : $x62################## LIVENESS: _main
+################## INTERFERENCE GRAPH 
+$v0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $sp $ra
+$v1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$a0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$a1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$a2: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$a3: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t2: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t3: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t4: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t5: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t6: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t7: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$s0: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $sp $ra
+$s1: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $sp $ra
+$s2: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $sp $ra
+$s3: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $sp $ra
+$s4: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $sp $ra
+$s5: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $sp $ra
+$s6: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $sp $ra
+$s7: $v0 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $ra
+$t8: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$t9: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $t8 $t9 $sp $ra
+$sp: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $t8 $t9 $ra
+$ra: $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $sp $ra
+###### Move graph
+$v0: $v0 $a0 $s0 $s1 $s2 $s3 $s4
+$v1: $a0 $s4 $s5
+$a0: $v0 $v1 $a0
+$s0: $v0
+$s1: $v0
+$s2: $v0 $s2
+$s3: $v0 $s3
+$s4: $v0 $v1 $s4
+$s5: $v1 $s5
+palette :  $v0 $v1 $a0 $a1 $a2 $a3 $t0 $t1 $t2 $t3 $t4 $t5 $t6 $t7 $s0 $s1 $s2 $s3 $s4 $s5 $s6 $s7 $t8 $t9 $ra
+Spills: 
+hi
+val it = () : unit
+[autoloading]
+[autoloading done]
+stdIn:1.50-1.85 Warning: type vars not generalized because of
+   value restriction are instantiated to dummy types (X1,X2,...)
+
