@@ -26,13 +26,20 @@ struct
        if (RS.member(spills, rd) andalso RS.member(spills, rs)) then
          [M.Move(rd, rs)]
        else
-       (
+       if(RS.member(spills, rd)) then
+          (case List.find (fn (ind, reg) => reg = rd) (!spillL) of
+                SOME((ind, reg)) => 
+          [M.Sw(rs, (M.immed (ind * 4), M.reg "$sp"))]
+              | NONE => 
+          (index := !index + 1; spillL := ((!index, rd) :: !spillL); 
+          [M.Sw(rs, (M.immed (!index * 4), M.reg "$sp"))])) else (
           if RS.member(spills, rs) then
             (case List.find (fn (ind, reg) => reg = rs) (!spillL) of
-                  SOME((ind, reg)) =>  (
+                  SOME((ind, reg)) =>  ((print ("(" ^ Int.toString ind ^ " : " ^
+                  M.reg2name reg ^ " \n"));
                   [M.Lw(rd, (M.immed (ind * 4), M.reg "$sp"))])
-                | NONE => (* ErrorMsg.impossible ( "register isn't in spillL : " ^
-                   M.reg2name rs ^ " : " ^ M.reg2name rd) *) [M.Move(rd,rs)]
+                | NONE => ErrorMsg.impossible ( "register isn't in spillL : " ^
+                   M.reg2name rs ^ " : " ^ M.reg2name rd)
               )  else [M.Move(rd, rs)])
       | others => [others]
 
@@ -51,22 +58,10 @@ struct
             nonSpillL := tmpReg1 :: (tmpReg2 :: (!nonSpillL)); 
           [M.Move(tmpReg1, rs), M.Move(tmpReg2, tmpReg1), M.Move(rd, tmpReg2)]
           end
-        else(
-          if(RS.member(spills, rd)) then
-          (case List.find (fn (ind, reg) => reg = rd) (!spillL) of
-                SOME((ind, reg)) => 
-          [M.Sw(rs, (M.immed (ind * 4), M.reg "$sp"))]
-              | NONE => 
-          (index := !index + 1; spillL := ((!index, rd) :: !spillL); 
-          [M.Sw(rs, (M.immed (!index * 4), M.reg "$sp"))])) else (
-          if RS.member(spills, rs) then
-            (case List.find (fn (ind, reg) => reg = rs) (!spillL) of
-                  SOME((ind, reg)) =>  (
-                  [M.Lw(rd, (M.immed (ind * 4), M.reg "$sp"))])
-                | NONE => (* ErrorMsg.impossible ( "register isn't in spillL : " ^
-                   M.reg2name rs ^ " : " ^ M.reg2name rd) *) [M.Move(rd, rs)]
-              )  else [M.Move(rd, rs)])
-              )
+        else
+          [M.Move(f rd, f rs)]
+                   
+
        | M.Arith2(i,rd,rs) => 
            if (RS.member(spills, rs) andalso RS.member(spills, rd))
            then let val tmpReg1 = M.newReg(); val tmpReg2 = M.newReg() in
@@ -187,6 +182,7 @@ struct
            if (RS.member(spills, r) andalso RS.member(spills, ra))
            then let val tmpReg1 = M.newReg(); val tmpReg2 = M.newReg() in
              nonSpillL := tmpReg1 :: (tmpReg2 :: (!nonSpillL)) ;
+             print("Sw : " ^ M.reg2name ra ^ "\n");
              [M.Move(tmpReg1, r), M.Move(tmpReg2, ra), M.Sw(tmpReg1, (lab, tmpReg2))]
                 end
            else if (RS.member(spills, r))
@@ -316,9 +312,18 @@ struct
        val instrL = List.map (fn (l,instrs) => (l, flat(List.map (rename_spills
        (spills, spillL, index, nonSpillL)) instrs))) instrL
        
-       val instrL = (List.map (fn (l,instrs) => (l, flat(List.map (after_spills
-       (spills, spillL, index)) instrs))) instrL); 
-
+          val ig = Liveness.interference_graph instrL
+          val movegraph = IG.newGraph()
+          val _ = app (fn (_, l) => app (getmove movegraph) l) instrL
+          val coloring = Color.color {interference = ig, moves=movegraph, 
+	                  spillCost = spillCost, palette=palette}
+          val _ = Color.verify{complain=ErrorMsg.impossible, func=instrL, 
+                               spillCost=spillCost, palette=palette, 
+                               coloring=coloring}
+          val {alloc, spills} = coloring 
+       val instrL = List.map (fn (l,instrs) => (l,List.map (M.rename_regs alloc) instrs)) instrL
+          val instrL = (List.map (fn (l,instrs) => (l, flat(List.map (after_spills
+              (spills, spillL, index)) instrs))) instrL); 
      val spillset = ref spills
      val finalInstrL = ref instrL
    in
@@ -329,24 +334,28 @@ struct
           val ig = Liveness.interference_graph (!finalInstrL)
           val movegraph = IG.newGraph()
           val _ = app (fn (_, l) => app (getmove movegraph) l) (!finalInstrL)
-          val _ = print "###### Move graph\n"
-          val _ = Liveness.printgraph print movegraph
           val coloring = Color.color {interference = ig, moves=movegraph, 
 	                  spillCost = spillCost, palette=palette}
-          val _ = Color.verify{complain=ErrorMsg.impossible, func=(!finalInstrL), 
+          val _ = Color.verify{complain=ErrorMsg.impossible, func=instrL, 
                                spillCost=spillCost, palette=palette, 
                                coloring=coloring}
           val {alloc, spills} = coloring
-          val _ = (print "Spills: "; 
-                RS.app (fn r => (print (M.reg2name r); print " ")) spills;
-	        print "\n")
           val instrL = List.map (fn (l,instrs) => (l,List.map (M.rename_regs
           alloc) instrs)) (!finalInstrL)
           val instrL = (List.map (fn (l,instrs) => (l, flat(List.map (rename_spills
               (spills, spillL, index, nonSpillL)) instrs))) instrL) 
+          val ig = Liveness.interference_graph instrL
+          val movegraph = IG.newGraph()
+          val _ = app (fn (_, l) => app (getmove movegraph) l) instrL
+          val coloring = Color.color {interference = ig, moves=movegraph, 
+	                  spillCost = spillCost, palette=palette}
+          val _ = Color.verify{complain=ErrorMsg.impossible, func=instrL, 
+                               spillCost=spillCost, palette=palette, 
+                               coloring=coloring}
+          val {alloc, spills} = coloring 
+       val instrL = List.map (fn (l,instrs) => (l,List.map (M.rename_regs alloc) instrs)) instrL
           val instrL = (List.map (fn (l,instrs) => (l, flat(List.map (after_spills
               (spills, spillL, index)) instrs))) instrL);
-
           val _ = print("hi\n")          
 
         in
