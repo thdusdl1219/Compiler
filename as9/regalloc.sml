@@ -16,6 +16,8 @@ struct
    fun getmove g (M.Move(r1,r2)) = IG.mk_edge g {from=r2,to=r1} 
      | getmove g _ = ()
 
+ fun print_list list : unit =
+   (app (fn (reg, reg2) => (print " "; print (M.reg2name reg))) list; print "\n")
    fun print_set set : unit =
       (RS.app (fn reg => (print " "; print (M.reg2name reg))) set; print "\n")
    fun flat xs = List.foldr op@ [] xs
@@ -283,13 +285,15 @@ struct
      | h::t => h :: make_end (t,index)
 
    fun alloc(instrL as ((funlab,block)::rest) : M.funcode) = 
-   let 
+   let
+     val index = ref (~1)
+     fun alloc_sub (instrL as ((funlab, block) :: rest)) =
+     let 
        val nonSpillL : M.reg list ref = ref []
        fun spillCost x = if(List.exists (fn reg => reg = x) (!nonSpillL)) then
            Color.spillCostInfinity else 1
        
        val spillL : (int * M.reg) list ref = ref []
-       val index = ref (~1)
        val ig = Liveness.interference_graph instrL
        val movegraph = IG.newGraph()
        val _ = app (fn (_,l) => app (getmove movegraph) l) instrL
@@ -324,16 +328,13 @@ struct
        val instrL = List.map (fn (l,instrs) => (l,List.map (M.rename_regs alloc) instrs)) instrL
           val instrL = (List.map (fn (l,instrs) => (l, flat(List.map (after_spills
               (spills, spillL, index)) instrs))) instrL); 
-     val spillset = ref spills
-     val finalInstrL = ref instrL
-   in
-     while not (RS.isEmpty (!spillset)) do
-     (
-     
+     fun loop spillset finalinstrL =
+       if(RS.isEmpty (spillset)) then finalinstrL
+       else 
         let 
-          val ig = Liveness.interference_graph (!finalInstrL)
+          val ig = Liveness.interference_graph (finalinstrL)
           val movegraph = IG.newGraph()
-          val _ = app (fn (_, l) => app (getmove movegraph) l) (!finalInstrL)
+          val _ = app (fn (_, l) => app (getmove movegraph) l) (finalinstrL)
           val coloring = Color.color {interference = ig, moves=movegraph, 
 	                  spillCost = spillCost, palette=palette}
           val _ = Color.verify{complain=ErrorMsg.impossible, func=instrL, 
@@ -341,7 +342,7 @@ struct
                                coloring=coloring}
           val {alloc, spills} = coloring
           val instrL = List.map (fn (l,instrs) => (l,List.map (M.rename_regs
-          alloc) instrs)) (!finalInstrL)
+          alloc) instrs)) (finalinstrL)
           val instrL = (List.map (fn (l,instrs) => (l, flat(List.map (rename_spills
               (spills, spillL, index, nonSpillL)) instrs))) instrL) 
           val ig = Liveness.interference_graph instrL
@@ -359,16 +360,22 @@ struct
           val _ = print("hi\n")          
 
         in
-          finalInstrL := instrL  ;
-          spillset := spills
+          loop spills instrL
         end 
-     );
-     let val ((funlab, block)::rest) = !finalInstrL; val st_instrL = if (!index)
-     = ~1 then !finalInstrL 
+   in
+     loop spills instrL
+  end
+   in
+
+     let val finalinstrL = alloc_sub instrL 
+     in
+      let val ((funlab, block)::rest) = finalinstrL; val st_instrL = if (!index)
+        = ~1 then finalinstrL 
           else (funlab, (M.Arithi(M.Addi, M.reg "$sp", M.reg "$sp", M.immed (~((!index + 1)*4)))) :: block)::rest
          val ed_instrL = make_end (st_instrL, index)
-     in
+      in
         ed_instrL
+      end
      end
   end
 end

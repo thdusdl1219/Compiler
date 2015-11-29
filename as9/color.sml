@@ -33,7 +33,7 @@ struct
     fun ori_redgs r1 r2 : unit = IG.rm_edge ori_ig {from = r1, to = r2};
     val node = IG.nodes movegraph;     
     fun choose_reg set reg_l = 
-      let val regL = List.filter (fn reg => M.isvirtual reg)(RS.listItems set)
+      let val regL = (RS.listItems set)
       in foldl (fn (reg, old_reg) => if(RS.member(adj reg_l, reg)) then old_reg else 
         if(RS.numItems (IG.adj ori_ig reg) > RS.numItems (IG.adj ori_ig
         old_reg)) then reg else old_reg) (reg_l) (regL)
@@ -94,11 +94,24 @@ struct
                       (getalias table reg) ^ M.reg2name (hd (RS.listItems
                       okColor)));
                       case RT.look(#alloc(colorResult), getalias table reg) of
-                        SOME(creg) => {alloc = RT.enter(#alloc(colorResult),
-                    reg, creg), spills = #spills(colorResult)} 
-                      | NONE => (print("hi\n"); {alloc = RT.enter(#alloc(colorResult),
+                        SOME(creg) => if(RS.member(okColor, creg)) then {alloc = RT.enter(#alloc(colorResult),
+                    reg, creg), spills = #spills(colorResult)} else
+                    {alloc = RT.enter(#alloc(colorResult),
+                        reg, hd (RS.listItems okColor)), spills = #spills(colorResult)}
+                      | NONE => (
+                        case RT.look(precolored, getalias table reg) of
+                             SOME(precreg) => (
+                              if(RS.member(okColor, precreg)) then 
+                                (print("precolored\n"); 
+                              {alloc = RT.enter(#alloc(colorResult), reg,
+                              precreg), spills = #spills(colorResult)})
+                              else 
+                              {alloc = RT.enter(#alloc(colorResult),
+                                reg, hd (RS.listItems okColor)), spills = #spills(colorResult)}
+                              )
+                           | NONE => ( {alloc = RT.enter(#alloc(colorResult),
                     reg, hd (RS.listItems okColor)), spills =
-                    #spills(colorResult)}))
+                    #spills(colorResult)})))
                      (*val spill =
                        if(RS.member(spill, getalias table reg)) then RS.add(spill,
                        reg) else spill*)
@@ -221,7 +234,9 @@ struct
          (true, true) => 
          (case (RT.look(alloc, r1)) of 
           SOME(colorReg) => (case (RT.look(alloc, r2)) of 
-                                  SOME(colorReg2) => if(colorReg = colorReg2) then ( ErrorMsg.impossible "clover 1")
+                                  SOME(colorReg2) => if(colorReg = colorReg2)
+         then ( ErrorMsg.impossible ("clover 1" ^ M.reg2name r1 ^ " : " ^
+         M.reg2name r2))
                                                  else ()
                                 | NONE => ErrorMsg.impossible "clover 2" )
         | NONE => ErrorMsg.impossible "clover 3" 

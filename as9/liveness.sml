@@ -101,12 +101,20 @@ structure Liveness : LIVENESS = struct
 
  fun analyze {mention: M.reg -> unit, interfere: M.reg -> M.reg -> unit}
              (blocks: M.codeblock list) =
-    let val live_at = ref Symbol.empty; val flow_graph = FG.newGraph(); val changed = ref false in 
+    let val live_at = ref Symbol.empty; val flow_graph = FG.newGraph() 
+      fun loop result =
+        if(#2(result)) 
+          then (live_at := #1(result); loop (analyze_func {mention=mention, interfere=interfere} blocks (!live_at) flow_graph false))
+        else 
+          ()
+    in 
+      loop (analyze_func {mention=mention, interfere=interfere} blocks (!live_at) flow_graph false)
+      (*
       while not(!changed) do (
       let val result = analyze_func {mention=mention,interfere=interfere} blocks (!live_at) flow_graph false in
         live_at := #1(result);
         changed := not(#2(result)) end
-      )
+      ) *)
 (*    ;app (fn (lab, _ ) =>  valOf(Symbol.look(!live_at, lab)))  *)
     end
 
